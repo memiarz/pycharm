@@ -3,9 +3,10 @@ historia = []
 saldo_stan = 0
 saldo_hist1 = []
 saldo_hist2 = []
-zakup = []
-sprzedaz = []
+zakup_hist = []
+sprzedaz_hist = []
 magazyn = {}
+
 
 while True:
     if slowo == "saldo":
@@ -26,21 +27,33 @@ while True:
             saldo_hist2.append(slowo)
             historia.append(saldo_hist2)
 
-        slowo = input()
-
     if slowo == "zakup":
-        zakup.append(slowo)
+        zakup_hist.append(slowo)
         slowo = input()
-        zakup.append(slowo)
+        zakup_hist.append(slowo)
         slowo = int(input())
-        zakup.append(slowo)
+        zakup_hist.append(slowo)
         slowo = int(input())
-        zakup.append(slowo)
-        historia.append(zakup)
-    else:
+        zakup_hist.append(slowo)
+        historia.append(zakup_hist)
+
+    if slowo == "sprzedaz":  # nie akceptuje polskich znaków: po zamiania na "sprzedaż" nie wyświetla się
+        sprzedaz_hist.append(slowo)
+        slowo = input()
+        sprzedaz_hist.append(slowo)
+        slowo = int(input())
+        sprzedaz_hist.append(slowo)
+        slowo = int(input())
+        sprzedaz_hist.append(slowo)
+        historia.append(sprzedaz_hist)
+
+    slowo = input()
+
+    if slowo == "stop":
         break
 
-print(zakup)
+
+
 print(historia)
 
 

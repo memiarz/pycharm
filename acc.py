@@ -1,23 +1,37 @@
 slowo = input()
 historia = []
 saldo_stan = 0
-saldo_hist = []
+saldo_hist1 = []
+saldo_hist2 = []
 zakup = []
 sprzedaz = []
 magazyn = {}
 
 while True:
     if slowo == "saldo":
-        saldo_hist.append(slowo)
+        saldo_hist1.append(slowo)
         slowo = int(input())
-        saldo_hist.append(slowo)
+        saldo_hist1.append(slowo)
         slowo = input()
-        saldo_hist.append(slowo)
-        historia.append(saldo_hist)
-    else:
+        saldo_hist1.append(slowo)
+        historia.append(saldo_hist1)
+
+    slowo = input()
+
+    if slowo == "saldo":
+        saldo_hist2.append(slowo)
+        slowo = int(input())
+        saldo_hist2.append(slowo)
+        slowo = input()
+        saldo_hist2.append(slowo)
+        historia.append(saldo_hist2)
+
+    if slowo == "stop":
         break
 
-print(saldo_hist)
+
+print(saldo_hist1)
+print(saldo_hist2)
 print(historia)
 
 

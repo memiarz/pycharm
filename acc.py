@@ -8,6 +8,7 @@ sprzedaz_hist = []
 magazyn = {}
 
 
+
 while True:
     if slowo == "saldo":
         saldo_hist1.append(slowo)
@@ -15,7 +16,9 @@ while True:
         saldo_hist1.append(slowo)
         slowo = input()
         saldo_hist1.append(slowo)
-        historia.append(saldo_hist1)
+        saldo_hist1_tupla = tuple(saldo_hist1)
+        historia.append(saldo_hist1_tupla)
+
 
         slowo = input()
 
@@ -25,7 +28,8 @@ while True:
             saldo_hist2.append(slowo)
             slowo = input()
             saldo_hist2.append(slowo)
-            historia.append(saldo_hist2)
+            saldo_hist2_tupla = tuple(saldo_hist2)
+            historia.append(saldo_hist2_tupla)
 
     if slowo == "zakup":
         zakup_hist.append(slowo)
@@ -35,7 +39,8 @@ while True:
         zakup_hist.append(slowo)
         slowo = int(input())
         zakup_hist.append(slowo)
-        historia.append(zakup_hist)
+        zakup_hist_tupla = tuple(zakup_hist)
+        historia.append(zakup_hist_tupla)
 
     if slowo == "sprzedaz":  # nie akceptuje polskich znaków: po zamiania na "sprzedaż" nie wyświetla się
         sprzedaz_hist.append(slowo)
@@ -45,7 +50,8 @@ while True:
         sprzedaz_hist.append(slowo)
         slowo = int(input())
         sprzedaz_hist.append(slowo)
-        historia.append(sprzedaz_hist)
+        sprzedaz_hist_tupla = tuple(sprzedaz_hist)
+        historia.append(sprzedaz_hist_tupla)
 
     slowo = input()
 

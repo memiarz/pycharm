@@ -1,6 +1,6 @@
 slowo = input()
 historia = []
-saldo_stan = 0
+saldo = 0
 saldo_hist1 = []
 saldo_hist2 = []
 zakup_hist = []
@@ -13,6 +13,7 @@ while True:
     if slowo == "saldo":
         saldo_hist1.append(slowo)
         slowo = int(input())
+        saldo += slowo
         saldo_hist1.append(slowo)
         slowo = input()
         saldo_hist1.append(slowo)
@@ -25,6 +26,7 @@ while True:
         if slowo == "saldo":
             saldo_hist2.append(slowo)
             slowo = int(input())
+            saldo += slowo
             saldo_hist2.append(slowo)
             slowo = input()
             saldo_hist2.append(slowo)
@@ -35,9 +37,10 @@ while True:
         zakup_hist.append(slowo)
         slowo = input()
         zakup_hist.append(slowo)
-        slowo = int(input())
+        zakup1 = int(input())
         zakup_hist.append(slowo)
-        slowo = int(input())
+        zakup2 = int(input())
+        saldo = saldo - (zakup1 * zakup2)
         zakup_hist.append(slowo)
         zakup_hist_tupla = tuple(zakup_hist)
         historia.append(zakup_hist_tupla)
@@ -46,9 +49,10 @@ while True:
         sprzedaz_hist.append(slowo)
         slowo = input()
         sprzedaz_hist.append(slowo)
-        slowo = int(input())
+        sprzedaz1 = int(input())
         sprzedaz_hist.append(slowo)
-        slowo = int(input())
+        sprzedaz2 = int(input())
+        saldo = saldo + (sprzedaz1 * sprzedaz2)
         sprzedaz_hist.append(slowo)
         sprzedaz_hist_tupla = tuple(sprzedaz_hist)
         historia.append(sprzedaz_hist_tupla)
@@ -61,7 +65,7 @@ while True:
 
 
 print(historia)
-
+print(saldo)
 
 
 

@@ -16,22 +16,31 @@ while True:
         saldo_hist1.append(slowo)
         historia.append(saldo_hist1)
 
-    slowo = input()
-
-    if slowo == "saldo":
-        saldo_hist2.append(slowo)
-        slowo = int(input())
-        saldo_hist2.append(slowo)
         slowo = input()
-        saldo_hist2.append(slowo)
-        historia.append(saldo_hist2)
 
-    if slowo == "stop":
+        if slowo == "saldo":
+            saldo_hist2.append(slowo)
+            slowo = int(input())
+            saldo_hist2.append(slowo)
+            slowo = input()
+            saldo_hist2.append(slowo)
+            historia.append(saldo_hist2)
+
+        slowo = input()
+
+    if slowo == "zakup":
+        zakup.append(slowo)
+        slowo = input()
+        zakup.append(slowo)
+        slowo = int(input())
+        zakup.append(slowo)
+        slowo = int(input())
+        zakup.append(slowo)
+        historia.append(zakup)
+    else:
         break
 
-
-print(saldo_hist1)
-print(saldo_hist2)
+print(zakup)
 print(historia)
 
 

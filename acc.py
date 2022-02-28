@@ -10,8 +10,9 @@ hist_tmp = []
 
 
 while True:
+
     if akcja not in ["saldo", "sprzedaz", "zakup"]:
-        print("Błąd!")
+        print("Błąd! Kończę pracę")
         break
 
     if akcja == "saldo":
@@ -31,7 +32,7 @@ while True:
         if akcja == "saldo":
             continue
 
-    if akcja == "zakup":
+    elif akcja == "zakup":
         produkt_zakup = input()
         cena_zakupu = int(input())
         szt_zakup = int(input())
@@ -51,7 +52,7 @@ while True:
         if akcja == "sprzedaz":
             continue
 
-    if akcja == "sprzedaz":
+    elif akcja == "sprzedaz":
         produkt_sprzedaz = input()
         cena_sprzedazy = int(input())
         szt_sprzedaz = int(input())
@@ -75,21 +76,19 @@ while True:
         break
 
 
+print()
+
+for element in historia:
+    print(element)
+
+print()
+
+print("Saldo:", saldo)
+
+print()
 
 
 
-
-
-# ilosc_produktow =
-#
-# =
-#
-#
-# magazyn = {"Produkt": produkt_zakup, "szt.": szt_zakup}
-
-print(historia)
-print(saldo)
-print(magazyn)
 
 
 
@@ -103,7 +102,7 @@ print(magazyn)
 przegląd = ma wczytywać dwie wartości
 konto =
 
-
+jeżeli saldo poniżej 0 to błąd
 
 """""
 

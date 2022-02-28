@@ -7,7 +7,7 @@ zakup_hist = []
 sprzedaz_hist = []
 magazyn = {}
 hist_tmp = []
-
+ilosc_szt = 0
 
 while True:
 
@@ -47,15 +47,26 @@ while True:
         historia.append(hist_tmp)
         hist_tmp = []
 
+        if produkt_zakup not in magazyn:
+            magazyn[produkt_zakup] = szt_zakup
+        else:
+            x = magazyn[produkt_zakup]
+            ilosc_szt = x + szt_zakup
+            magazyn[produkt_zakup] = ilosc_szt
+
+
         akcja = input()
 
-        if akcja == "sprzedaz":
+        if akcja == "zakup":
             continue
+
 
     elif akcja == "sprzedaz":
         produkt_sprzedaz = input()
         cena_sprzedazy = int(input())
         szt_sprzedaz = int(input())
+
+        # produkt_id = produkt_sprzedaz
 
         hist_tmp.append(akcja)
         hist_tmp.append(produkt_sprzedaz)
@@ -66,6 +77,21 @@ while True:
 
         historia.append(hist_tmp)
         hist_tmp = []
+
+        if produkt_sprzedaz not in magazyn:
+            print("Nie ma takiego produktu w magazynie!")
+            break
+        else:
+            x = magazyn[produkt_sprzedaz]
+            ilosc_szt = x - szt_sprzedaz
+            magazyn[produkt_sprzedaz] = ilosc_szt
+            if ilosc_szt == 0:
+                del magazyn[produkt_sprzedaz]
+            if ilosc_szt <0:
+                print()
+                print("Nieprawidłowa operacja: za duża ilość sprzedanych elementów!")
+                break
+
 
         akcja = input()
 
@@ -87,8 +113,11 @@ print("Saldo:", saldo)
 
 print()
 
+print("Magazyn:", magazyn)
 
-
+# x = magazyn[produkt_zakup]
+# szt_zakup = x + szt_zakup
+# magazyn[produkt_zakup] = szt_zakup
 
 
 

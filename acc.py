@@ -1,4 +1,4 @@
-slowo = input()
+akcja = input()
 historia = []
 saldo = 0
 saldo_hist1 = []
@@ -10,75 +10,81 @@ magazyn = {}
 
 
 while True:
-    if slowo == "saldo":
-        saldo_hist1.append(slowo)
-        slowo = int(input())
-        saldo += slowo
-        saldo_hist1.append(slowo)
-        slowo = input()
-        saldo_hist1.append(slowo)
+    if akcja == "saldo":
+        saldo_zmiana = int(input())
+        saldo_koment = input()
+
+        saldo_hist1.append(akcja)
+        saldo_hist1.append(saldo_zmiana)
+        saldo_hist1.append(saldo_koment)
+
+        saldo += (saldo_zmiana)
+
         saldo_hist1_tupla = tuple(saldo_hist1)
         historia.append(saldo_hist1_tupla)
 
+        akcja = input()
 
-        slowo = input()
+        if akcja == "saldo":
+            saldo_zmiana = int(input())
+            saldo_koment = input()
 
-        if slowo == "saldo":
-            saldo_hist2.append(slowo)
-            slowo = int(input())
-            saldo += slowo
-            saldo_hist2.append(slowo)
-            slowo = input()
-            saldo_hist2.append(slowo)
+            saldo_hist2.append(akcja)
+            saldo_hist2.append(saldo_zmiana)
+            saldo_hist2.append(saldo_koment)
+
+            saldo += (saldo_zmiana)
+
             saldo_hist2_tupla = tuple(saldo_hist2)
             historia.append(saldo_hist2_tupla)
 
-    if slowo == "zakup":
-        zakup_hist.append(slowo)
-        slowo = input()
-        zakup_hist.append(slowo)
-        zakup1 = int(input())
-        zakup_hist.append(slowo)
-        zakup2 = int(input())
-        saldo = saldo - (zakup1 * zakup2)
-        zakup_hist.append(slowo)
+
+    if akcja == "zakup":
+        produkt_zakup = input()
+        cena_zakupu = int(input())
+        szt_zakup = int(input())
+
+        zakup_hist.append(akcja)
+        zakup_hist.append(produkt_zakup)
+        zakup_hist.append(cena_zakupu)
+        zakup_hist.append(szt_zakup)
+
+        saldo = saldo - (cena_zakupu * szt_zakup)
+
         zakup_hist_tupla = tuple(zakup_hist)
         historia.append(zakup_hist_tupla)
 
-    if slowo == "sprzedaz":  # nie akceptuje polskich znaków: po zamiania na "sprzedaż" nie wyświetla się
-        sprzedaz_hist.append(slowo)
-        slowo = input()
-        sprzedaz_hist.append(slowo)
-        sprzedaz1 = int(input())
-        sprzedaz_hist.append(slowo)
-        sprzedaz2 = int(input())
-        saldo = saldo + (sprzedaz1 * sprzedaz2)
-        sprzedaz_hist.append(slowo)
+    if akcja == "sprzedaz":
+        produkt_sprzedaz = input()
+        cena_sprzedazy = int(input())
+        szt_sprzedaz = int(input())
+
+        sprzedaz_hist.append(akcja)
+        sprzedaz_hist.append(produkt_sprzedaz)
+        sprzedaz_hist.append(cena_sprzedazy)
+        sprzedaz_hist.append(szt_sprzedaz)
+
+        saldo = saldo + (cena_sprzedazy * szt_sprzedaz)
+
         sprzedaz_hist_tupla = tuple(sprzedaz_hist)
         historia.append(sprzedaz_hist_tupla)
 
-    slowo = input()
+    akcja = input()
 
-    if slowo == "stop":
+    if akcja == "stop":
         break
 
 
+ilosc_produktow =
+
+=
+
+
+magazyn = {"Produkt": produkt_zakup, "szt.": szt_zakup}
 
 print(historia)
 print(saldo)
-
-
-
-
-
-
-#
-# if input() == "stop":
-#     break
-
-
-
-
+print(magazyn)
 
 
 
@@ -89,8 +95,9 @@ print(saldo)
 
 
 """""
-1. get content in.txt | python acc.py saldo 2000 dofinansowanie
--Wczytanie wszystkich akcji po kolei
+przegląd = ma wczytywać dwie wartości
+konto =
+
 
 
 """""
@@ -102,8 +109,8 @@ print(saldo)
 #
 # if sys.argv[1] == "saldo":
 #     while True:
-#         slowo_klucz = input()
-#         if slowo_klucz == "saldo":
+#         akcja_klucz = input()
+#         if akcja_klucz == "saldo":
 #             saldo_int = int(input())
 #             saldo_kom = input()
 #             print(f"Saldo: {saldo_int}, {saldo_kom}")
@@ -111,8 +118,8 @@ print(saldo)
 #
 # if sys.argv[1] == "zakup":
 #     while True:
-#         slowo_klucz = input()
-#         if slowo_klucz == "zakup":
+#         akcja_klucz = input()
+#         if akcja_klucz == "zakup":
 #             przedmiot_opis = input()
 #             przedmiot_cena = int(input())
 #             przedmiot_szt = int(input())

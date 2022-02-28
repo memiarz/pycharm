@@ -6,81 +6,86 @@ saldo_hist2 = []
 zakup_hist = []
 sprzedaz_hist = []
 magazyn = {}
-
+hist_tmp = []
 
 
 while True:
+    if akcja not in ["saldo", "sprzedaz", "zakup"]:
+        print("Błąd!")
+        break
+
     if akcja == "saldo":
         saldo_zmiana = int(input())
         saldo_koment = input()
 
-        saldo_hist1.append(akcja)
-        saldo_hist1.append(saldo_zmiana)
-        saldo_hist1.append(saldo_koment)
+        hist_tmp.append(akcja)
+        hist_tmp.append(saldo_zmiana)
+        hist_tmp.append(saldo_koment)
 
         saldo += (saldo_zmiana)
 
-        saldo_hist1_tupla = tuple(saldo_hist1)
-        historia.append(saldo_hist1_tupla)
+        historia.append(hist_tmp)
+        hist_tmp = []
 
         akcja = input()
-
         if akcja == "saldo":
-            saldo_zmiana = int(input())
-            saldo_koment = input()
-
-            saldo_hist2.append(akcja)
-            saldo_hist2.append(saldo_zmiana)
-            saldo_hist2.append(saldo_koment)
-
-            saldo += (saldo_zmiana)
-
-            saldo_hist2_tupla = tuple(saldo_hist2)
-            historia.append(saldo_hist2_tupla)
-
+            continue
 
     if akcja == "zakup":
         produkt_zakup = input()
         cena_zakupu = int(input())
         szt_zakup = int(input())
 
-        zakup_hist.append(akcja)
-        zakup_hist.append(produkt_zakup)
-        zakup_hist.append(cena_zakupu)
-        zakup_hist.append(szt_zakup)
+        hist_tmp.append(akcja)
+        hist_tmp.append(produkt_zakup)
+        hist_tmp.append(cena_zakupu)
+        hist_tmp.append(szt_zakup)
 
         saldo = saldo - (cena_zakupu * szt_zakup)
 
-        zakup_hist_tupla = tuple(zakup_hist)
-        historia.append(zakup_hist_tupla)
+        historia.append(hist_tmp)
+        hist_tmp = []
+
+        akcja = input()
+
+        if akcja == "sprzedaz":
+            continue
 
     if akcja == "sprzedaz":
         produkt_sprzedaz = input()
         cena_sprzedazy = int(input())
         szt_sprzedaz = int(input())
 
-        sprzedaz_hist.append(akcja)
-        sprzedaz_hist.append(produkt_sprzedaz)
-        sprzedaz_hist.append(cena_sprzedazy)
-        sprzedaz_hist.append(szt_sprzedaz)
+        hist_tmp.append(akcja)
+        hist_tmp.append(produkt_sprzedaz)
+        hist_tmp.append(cena_sprzedazy)
+        hist_tmp.append(szt_sprzedaz)
 
         saldo = saldo + (cena_sprzedazy * szt_sprzedaz)
 
-        sprzedaz_hist_tupla = tuple(sprzedaz_hist)
-        historia.append(sprzedaz_hist_tupla)
+        historia.append(hist_tmp)
+        hist_tmp = []
 
-    akcja = input()
+        akcja = input()
+
+        if akcja == "sprzedaz":
+            continue
 
     if akcja == "stop":
         break
 
 
-ilosc_produktow =
-
-=
 
 
-magazyn = {"Produkt": produkt_zakup, "szt.": szt_zakup}
+
+
+
+# ilosc_produktow =
+#
+# =
+#
+#
+# magazyn = {"Produkt": produkt_zakup, "szt.": szt_zakup}
 
 print(historia)
 print(saldo)

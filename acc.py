@@ -1,3 +1,5 @@
+import sys
+
 akcja = input()
 historia = []
 saldo = 0
@@ -12,7 +14,7 @@ ilosc_szt = 0
 while True:
 
     if akcja not in ["saldo", "sprzedaz", "zakup"]:
-        print("Błąd! Kończę pracę")
+        print("Brak akcji saldo/sprzedaz/zakup! Koniec")
         break
 
     if akcja == "saldo":
@@ -28,9 +30,6 @@ while True:
         historia.append(hist_tmp)
         hist_tmp = []
 
-        akcja = input()
-        if akcja == "saldo":
-            continue
 
     elif akcja == "zakup":
         produkt_zakup = input()
@@ -43,6 +42,11 @@ while True:
         hist_tmp.append(szt_zakup)
 
         saldo = saldo - (cena_zakupu * szt_zakup)
+        if saldo < 0:
+            print()
+            print("Nie można dokonać zakupu!" "\nZa mało pieniędy na koncie!")
+            print()
+            exit()
 
         historia.append(hist_tmp)
         hist_tmp = []
@@ -55,18 +59,11 @@ while True:
             magazyn[produkt_zakup] = ilosc_szt
 
 
-        akcja = input()
-
-        if akcja == "zakup":
-            continue
-
-
     elif akcja == "sprzedaz":
         produkt_sprzedaz = input()
         cena_sprzedazy = int(input())
         szt_sprzedaz = int(input())
 
-        # produkt_id = produkt_sprzedaz
 
         hist_tmp.append(akcja)
         hist_tmp.append(produkt_sprzedaz)
@@ -79,27 +76,28 @@ while True:
         hist_tmp = []
 
         if produkt_sprzedaz not in magazyn:
-            print("Nie ma takiego produktu w magazynie!")
-            break
-        else:
+            print()
+            print("Błąd!""\nNie można sprzedać produktu którego nie ma w magazynie!")
+            print()
+            exit()
+        if produkt_sprzedaz in magazyn:
             x = magazyn[produkt_sprzedaz]
             ilosc_szt = x - szt_sprzedaz
             magazyn[produkt_sprzedaz] = ilosc_szt
             if ilosc_szt == 0:
                 del magazyn[produkt_sprzedaz]
-            if ilosc_szt <0:
+            elif ilosc_szt <0:
                 print()
                 print("Nieprawidłowa operacja: za duża ilość sprzedanych elementów!")
-                break
+                print()
+                exit()
 
-
-        akcja = input()
-
-        if akcja == "sprzedaz":
-            continue
 
     if akcja == "stop":
         break
+
+    akcja = input()
+
 
 
 print()
@@ -115,9 +113,27 @@ print()
 
 print("Magazyn:", magazyn)
 
-# x = magazyn[produkt_zakup]
-# szt_zakup = x + szt_zakup
-# magazyn[produkt_zakup] = szt_zakup
+
+
+#
+# if sys.argv[1] == "saldo":
+#     while True:
+#         akcja_klucz = input()
+#         if akcja_klucz == "saldo":
+#             saldo_int = int(input())
+#             saldo_kom = input()
+#             print(f"Saldo: {saldo_int}, {saldo_kom}")
+#             break
+#
+# if sys.argv[1] == "zakup":
+#     while True:
+#         akcja_klucz = input()
+#         if akcja_klucz == "zakup":
+#             przedmiot_opis = input()
+#             przedmiot_cena = int(input())
+#             przedmiot_szt = int(input())
+#             print(f"{przedmiot_opis}, cena: {przedmiot_cena}, {przedmiot_szt} szt.")
+#             break
 
 
 
@@ -131,7 +147,17 @@ print("Magazyn:", magazyn)
 przegląd = ma wczytywać dwie wartości
 konto =
 
+jeżeli na początku sprzedamy marchewki których nie mamy: żeby zatrzymywało i nie pokazywało salda
+
 jeżeli saldo poniżej 0 to błąd
+
+jeżeli błąd salda lub sprzedaży to przywracanie ich stanu do poprzedniej wartości i kontynuowanie?
+
+działanie bez inputu
+
+marchewka: -1
+
+poprawić ify i elify?
 
 """""
 

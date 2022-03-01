@@ -3,10 +3,6 @@ import sys
 akcja = input()
 historia = []
 saldo = 0
-saldo_hist1 = []
-saldo_hist2 = []
-zakup_hist = []
-sprzedaz_hist = []
 magazyn = {}
 hist_tmp = []
 ilosc_szt = 0
@@ -114,7 +110,7 @@ print()
 print("Magazyn:", magazyn)
 
 
-
+## SYS.ARGV
 
 if sys.argv[1] == "konto":
     print("Konto:", saldo)
@@ -124,8 +120,14 @@ if sys.argv[1] == "magazyn":
 
 if sys.argv[1] == "przeglad":
     przeglad_od = int(sys.argv[2])
-    przeglad_do = int(sys.argv[3])
-    print("Przeglad historii:", historia[przeglad_od:przeglad_do])
+    try:
+        przeglad_do = int(sys.argv[3])
+        print("Przeglad historii:", historia[przeglad_od:przeglad_do])
+    except:
+        print("Przeglad historii:", historia[przeglad_od])
+
+
+    # print("Przeglad historii:", historia[przeglad_od:przeglad_do])
 
 
 
@@ -207,15 +209,9 @@ if sys.argv[1] == "sprzedaz":
 
 
 
-print(magazyn)
+print("Magazyn:", magazyn)
 print(historia)
 print(saldo)
-
-
-
-
-
-
 
 
 
@@ -239,6 +235,12 @@ ujemna cena
 marchewka: -1
 
 poprawić ify i elify?
+
+magazyn jabłko gruszka banan --> jabłko:0 gruszka:0 banan:0
+
+sprawdzić, czy przegląd -1 do minus czegoś tam działa
+
+
 
 """""
 

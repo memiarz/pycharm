@@ -116,7 +116,13 @@ if sys.argv[1] == "konto":
     print("Konto:", saldo)
 
 if sys.argv[1] == "magazyn":
-    print("Magazyn:",magazyn)
+    produkt1 = sys.argv[2]
+    if produkt1 in magazyn:
+        print("W magazynie:",produkt1, magazyn[produkt1] )
+
+
+    # produkt2 = sys.argv[3]
+    # print("Magazyn:",magazyn)
 
 if sys.argv[1] == "przeglad":
     przeglad_od = int(sys.argv[2])

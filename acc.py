@@ -1,4 +1,4 @@
-import sys
+# import sys
 
 akcja = input()
 historia = []
@@ -8,9 +8,11 @@ hist_tmp = []
 ilosc_szt = 0
 
 while True:
+    #if akcja != "saldo" or akcja != "sprzedaz" or akcja != "zakup" or akcja !="stop":
 
-    if akcja not in ["saldo", "sprzedaz", "zakup"]:
-        print("Brak akcji saldo/sprzedaz/zakup! Koniec")
+    if akcja not in ["saldo", "zakup", "sprzedaz"]:
+        print()
+        print("Brak akcji saldo/sprzedaz/zakup!")
         break
 
     if akcja == "saldo":
@@ -112,25 +114,30 @@ while True:
 
 ## SYS.ARGV
 
+import sys
+
 if sys.argv[1] == "konto":
     print()
     print("Konto:", saldo)
 
 if sys.argv[1] == "magazyn":
+    print()
+    print("Magazyn: ", end="")
     for produkt in sys.argv[2:]:
-        print(f"Magazyn: {produkt} {magazyn.get(produkt, 0)} szt.")
-
+        print(f"{produkt} {magazyn.get(produkt, 0)} szt., ", end="")
 
 
 if sys.argv[1] == "przeglad":
     przeglad_od = int(sys.argv[2])
     try:
         przeglad_do = int(sys.argv[3])
+        print()
         print("Przeglad historii:", historia[przeglad_od:przeglad_do])
+        print()
     except:
+        print()
         print("Przeglad historii:", historia[przeglad_od])
-
-
+        print()
 
 if sys.argv[1] == "saldo":
     kwota = int(sys.argv[2])
@@ -144,7 +151,6 @@ if sys.argv[1] == "saldo":
     hist_tmp = []
 
     saldo += kwota
-
 
 if sys.argv[1] == "zakup":
     produkt_zakup = sys.argv[2]
@@ -172,7 +178,6 @@ if sys.argv[1] == "zakup":
         x = magazyn[produkt_zakup]
         ilosc_szt = x + szt_zakup
         magazyn[produkt_zakup] = ilosc_szt
-
 
 if sys.argv[1] == "sprzedaz":
     produkt_sprzedaz = sys.argv[2]
@@ -204,15 +209,22 @@ if sys.argv[1] == "sprzedaz":
             print()
             exit()
 
+print()
+print()
+for element in historia:
+    print(element)
 
+print()
 
+print("Saldo:", saldo)
+print()
 
 # print("Magazyn:", magazyn)
-print()
-print(historia)
-print()
-print(saldo)
-print()
+# print()
+# print(historia)
+# print()
+# print(saldo)
+# print()
 
 
 
@@ -220,6 +232,10 @@ print()
 
 
 """""
+
+dlaczego wywala błąd przy przegląd magazyn konto kiedy są wprowadzane z inputu? 
+
+
 przegląd = ma wczytywać dwie wartości
 konto =
 
@@ -237,7 +253,6 @@ marchewka: -1
 
 poprawić ify i elify?
 
-magazyn jabłko gruszka banan --> jabłko:0 gruszka:0 banan:0
 
 sprawdzić, czy przegląd -1 do minus czegoś tam działa
 

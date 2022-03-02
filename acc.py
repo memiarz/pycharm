@@ -96,33 +96,31 @@ while True:
 
 
 
-print()
-
-for element in historia:
-    print(element)
-
-print()
-
-print("Saldo:", saldo)
-
-print()
-
-print("Magazyn:", magazyn)
+# print()
+#
+# for element in historia:
+#     print(element)
+#
+# print()
+#
+# print("Saldo:", saldo)
+#
+# print()
+#
+# print("Magazyn:", magazyn)
 
 
 ## SYS.ARGV
 
 if sys.argv[1] == "konto":
+    print()
     print("Konto:", saldo)
 
 if sys.argv[1] == "magazyn":
-    produkt1 = sys.argv[2]
-    if produkt1 in magazyn:
-        print("W magazynie:",produkt1, magazyn[produkt1] )
+    for produkt in sys.argv[2:]:
+        print(f"Magazyn: {produkt} {magazyn.get(produkt, 0)} szt.")
 
 
-    # produkt2 = sys.argv[3]
-    # print("Magazyn:",magazyn)
 
 if sys.argv[1] == "przeglad":
     przeglad_od = int(sys.argv[2])
@@ -131,9 +129,6 @@ if sys.argv[1] == "przeglad":
         print("Przeglad historii:", historia[przeglad_od:przeglad_do])
     except:
         print("Przeglad historii:", historia[przeglad_od])
-
-
-    # print("Przeglad historii:", historia[przeglad_od:przeglad_do])
 
 
 
@@ -149,7 +144,6 @@ if sys.argv[1] == "saldo":
     hist_tmp = []
 
     saldo += kwota
-
 
 
 if sys.argv[1] == "zakup":
@@ -213,11 +207,12 @@ if sys.argv[1] == "sprzedaz":
 
 
 
-
-
-print("Magazyn:", magazyn)
+# print("Magazyn:", magazyn)
+print()
 print(historia)
+print()
 print(saldo)
+print()
 
 
 
@@ -247,6 +242,11 @@ magazyn jabłko gruszka banan --> jabłko:0 gruszka:0 banan:0
 sprawdzić, czy przegląd -1 do minus czegoś tam działa
 
 
+
+if sys.argv[1] == "magazyn":
+    produkt1 = sys.argv[2]
+    if produkt1 in magazyn:
+        print("W magazynie:",produkt1, magazyn[produkt1] )
 
 """""
 

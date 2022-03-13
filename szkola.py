@@ -39,6 +39,7 @@ naucz_klucz = 0
 
 while True:
     if pobierz == "wychowawca":
+        print("jestem w wychowawcy")
         lista_tmp = []
         lista_tmp2 = []
         # lista_tmp.append(pobierz)     # dodaje "wychowawca" do listy, ale chyba nie potrzebne
@@ -56,10 +57,10 @@ while True:
             pobierz = input()
 
         wychowawca[wych_klucz] = lista_tmp2
-        # print(klasa_wych)
-        # print(wychowawca)
+        print(klasa_wych)
+        print(wychowawca)
 
-        pobierz = input()
+
 
     if pobierz == "nauczyciel":
         print("jestem w nauczycielu")
@@ -78,14 +79,19 @@ while True:
             pobierz = input()
 
         nauczyciel[naucz_imie] = lista_tmp
-        # print(nauczyciel)
+        print(nauczyciel)
 
-        pobierz = input()
+    if pobierz == "end":
+        break
 
-    print(klasa_wych)
-    print(wychowawca)
-    print(nauczyciel)
 
+
+    # print(klasa_wych)
+    # print(wychowawca)
+    # print(nauczyciel)
+
+
+print("elo, elo, koniec")
 
 
 

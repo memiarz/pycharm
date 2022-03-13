@@ -31,8 +31,11 @@ import sys
 pobierz = input()
 
 klasa_wych = {}
-
 wychowawca = {}
+
+nauczyciel = {}
+naucz_klucz = 0
+
 
 while True:
     if pobierz == "wychowawca":
@@ -51,12 +54,40 @@ while True:
             lista_tmp2.append(pobierz)
 
             pobierz = input()
+
         wychowawca[wych_klucz] = lista_tmp2
-        print(klasa_wych)
-        print(wychowawca)
+        # print(klasa_wych)
+        # print(wychowawca)
+
+        pobierz = input()
+
+    if pobierz == "nauczyciel":
+        print("jestem w nauczycielu")
+        lista_tmp = []
+
+        pobierz = input()
+        naucz_imie = pobierz
+        pobierz = input()
+
+        lista_tmp.append(pobierz)
+
+        pobierz = input()
+        while len(pobierz) == 2:
+            lista_tmp.append(pobierz)
+
+            pobierz = input()
+
+        nauczyciel[naucz_imie] = lista_tmp
+        # print(nauczyciel)
+
+        pobierz = input()
+
+    print(klasa_wych)
+    print(wychowawca)
+    print(nauczyciel)
 
 
-    # if pobierz == "nauczyciel":
+
 
 
 

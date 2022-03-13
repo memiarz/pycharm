@@ -18,7 +18,8 @@
 ### nauczyciel:
 
 # nauczyciel = {"Jan Dlugosz": ["Jezyk Polski", "1a", "1b"], "Maria Konopnicka": ["Jezyk Polski", "2a", "2b", "2c"]}  ### jest
-# nauczyciel2 = {"1a": ["Jezyk Polski", "Jan Dlugosz"]}     ### jest
+# up trzeba usunąć duplikatky
+# nauczyciel2 = {"1a": ["Jezyk Polski", "Jan Dlugosz"]}     ### jest, ale bez obejścia problemu duplikatów
 
 
 # uczen = ["Marcin", "1a", ""]
@@ -38,7 +39,7 @@ nauczyciel_klasy = {}
 
 while True:
     if pobierz == "wychowawca":
-        print("jestem w wychowawcy")
+
         lista_tmp = []
         lista_tmp2 = []
         # lista_tmp.append(pobierz)     # dodaje "wychowawca" do listy, ale chyba nie potrzebne
@@ -58,9 +59,8 @@ while True:
         wychowawca[wych_klucz] = lista_tmp2
 
 
-
     if pobierz == "nauczyciel":
-        print("jestem w nauczycielu")
+
         lista_tmp = []
         lista_tmp2 = []
 
@@ -72,24 +72,42 @@ while True:
         lista_tmp.append(pobierz)
         lista_tmp2.append(pobierz)  #pobieranie przedmiotu nauczyciela
         lista_tmp2.reverse()
+        # lista_duplikat = lista_tmp2
 
         pobierz = input()
         while len(pobierz) == 2:
-            lista_tmp.append(pobierz)
-            nauczyciel_klasy[pobierz] = lista_tmp2
 
-            pobierz = input()
+            if pobierz not in nauczyciel_klasy.keys():
+                lista_tmp.append(pobierz)
+                nauczyciel_klasy[pobierz] = lista_tmp2
 
-        nauczyciel[naucz_imie] = lista_tmp
+                pobierz = input()
+            # nauczyciel[naucz_imie] = lista_tmp        # co to jest? coś ważnego?
+
+            if pobierz in nauczyciel_klasy.keys():
+                duplikat_klucz = nauczyciel_klasy[pobierz]
+                # print()
+                # print(duplikat)
+                # print()
+                lista_duplikat = duplikat_klucz + lista_tmp2
+
+                nauczyciel_klasy[pobierz] = lista_duplikat
+
+
+                pobierz = input()
+
 
     if pobierz == "end":
         break
 
 
-
+print()
 print(klasa_wych)
+print()
 print(wychowawca)
+print()
 print(nauczyciel)
+print()
 print(nauczyciel_klasy)
 
 

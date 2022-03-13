@@ -19,11 +19,12 @@
 
 # nauczyciel = {"Jan Dlugosz": ["Jezyk Polski", "1a", "1b"], "Maria Konopnicka": ["Jezyk Polski", "2a", "2b", "2c"]}  ### jest
 # up trzeba usunąć duplikatky
-# nauczyciel2 = {"1a": ["Jezyk Polski", "Jan Dlugosz"]}     ### jest, ale bez obejścia problemu duplikatów
+# nauczyciel2 = {"1a": ["Jezyk Polski", "Jan Dlugosz"]}     ### jest
 
 
 # uczen = ["Marcin", "1a", ""]
 #
+
 
 
 import sys
@@ -35,6 +36,14 @@ wychowawca = {}
 
 nauczyciel = {}
 nauczyciel_klasy = {}
+uczniowie_wg_klas = {}
+
+wychowawcy_lista = []
+nauczyciele_lista = []
+
+uczniowie_lista = []
+uczniowie_klasy_slownik = {}
+
 
 
 while True:
@@ -45,6 +54,7 @@ while True:
         # lista_tmp.append(pobierz)     # dodaje "wychowawca" do listy, ale chyba nie potrzebne
 
         pobierz = input()
+        wychowawcy_lista.append(pobierz)
         lista_tmp.append(pobierz)
         wych_klucz = pobierz      # pobieranie do drugiego wyszukiwanie ("wychowawca")
 
@@ -66,6 +76,7 @@ while True:
 
         pobierz = input()   #imię nauczyciela
         naucz_imie = pobierz
+        nauczyciele_lista.append(pobierz)   # dodanie nauczycieli dla sprawdzenia sys.argv
         lista_tmp2.append(naucz_imie)
 
         pobierz = input()   # przedmiot nauczyciela
@@ -88,6 +99,7 @@ while True:
             if pobierz in nauczyciel_klasy.keys():
                 duplikat_klucz = nauczyciel_klasy[pobierz]
                 lista_duplikat = duplikat_klucz + lista_tmp2
+
                 nauczyciel_klasy[pobierz] = lista_duplikat
 
                 lista_tmp.append(pobierz)
@@ -95,22 +107,100 @@ while True:
 
                 pobierz = input()
 
+# polecenie dict() ?
+# elify
 
-        if pobierz == "end":
+    if pobierz == "uczen":
+        tmp = []
+        uczen_imie = input()
+        uczen_klasa = input()
+        uczniowie_lista.append(uczen_imie)  #dodanie ucznia do listy wszystkich uczniów (do sys.argv)
+        tmp.append(uczen_imie)
+
+        uczniowie_klasy_slownik[uczen_imie] = uczen_klasa
+
+        if uczen_klasa not in uczniowie_wg_klas.keys():
+            uczniowie_wg_klas[uczen_klasa] = tmp
+
+
+        elif uczen_klasa in uczniowie_wg_klas.keys():
+            lista_uczniow_w_klasie = uczniowie_wg_klas[uczen_klasa]
+            dodanie_do_klasy = lista_uczniow_w_klasie + tmp
+            uczniowie_wg_klas[uczen_klasa] = dodanie_do_klasy
+
+
+        pobierz = input()
+
+
+        if pobierz == "koniec":
             break
 
 
-print()
-print(klasa_wych)
-print()
-print(wychowawca)
-print()
-print(nauczyciel)
-print()
-print(nauczyciel_klasy)
 
 
+if len(sys.argv[1]) == 2:
+    print(F"Wychowawca: ", klasa_wych[sys.argv[1]])
+    print("Uczniowie: ", uczniowie_wg_klas[sys.argv[1]])
+# else:
+    # print("Błąd!")
+    # print(uczniowie_wg_klas)
+
+print("Lista wychowawców: ", wychowawcy_lista)
+#
+#
+arg1 = sys.argv[1]
+arg2 = sys.argv[2]
+# arg3 = sys.argv[3]        # try/except
+
+wpis = ' '.join([arg1, arg2])
+#
+# wychowawca:
+
+if wpis in wychowawcy_lista:
+    for x in wychowawca[wpis]:
+        for uczniowie in uczniowie_wg_klas[x]:
+            print(uczniowie)
+
+
+
+if wpis in nauczyciele_lista:
+    ...
+
+
+# uczeń:
+#
+if wpis in uczniowie_klasy_slownik.keys():
+    ttt = uczniowie_klasy_slownik.get(wpis)
+    print(nauczyciel_klasy[ttt])
+
+
+# print(uczniowie_wg_klas.keys())
+
+
+
+# print()
+# print(klasa_wych)
+# print()
+# print(wychowawca)
+# print()
+# print(nauczyciel)
+# print()
+# print(nauczyciel_klasy)
+# print()
+# print()
+# print(uczniowie_wg_klas)
+# print()
+# print(wychowawcy_lista)
+# print()
+# print(nauczyciele_lista)
+# print()
+# print(uczniowie_lista)
+# print()
+# print(uczniowie_klasy_slownik)
 print("elo, elo, koniec")
+
+
+
 
 
 

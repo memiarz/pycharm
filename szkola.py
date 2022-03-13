@@ -12,10 +12,16 @@
 
 ### wychowawca:
 
-# wychowawca = {"Krzysztof Baczynski" : ["1a", "3c"], "Jan Brzechwa" : ["1c", "2b"]}
+# wychowawca = {"Krzysztof Baczynski" : ["1a", "3c"], "Jan Brzechwa" : ["1c", "2b"]}  ### jest
+# uczniowie wychowawcy
+
+### nauczyciel:
 
 # nauczyciel = {"Jan Dlugosz": ["Jezyk Polski", "1a", "1b"], "Maria Konopnicka": ["Jezyk Polski", "2a", "2b", "2c"]}
 # nauczyciel2 = {"1a": ["Jezyk Polski", "Jan Dlugosz"]}
+
+
+
 # uczen = ["Marcin", "1a", ""]
 #
 
@@ -31,20 +37,26 @@ wychowawca = {}
 while True:
     if pobierz == "wychowawca":
         lista_tmp = []
+        lista_tmp2 = []
         # lista_tmp.append(pobierz)     # dodaje "wychowawca" do listy, ale chyba nie potrzebne
 
         pobierz = input()
         lista_tmp.append(pobierz)
-        print(lista_tmp)
+        wych_klucz = pobierz      # pobieranie do drugiego wyszukiwanie ("wychowawca")
+
 
         pobierz = input()
         while len(pobierz) == 2:
             klasa_wych[pobierz] = lista_tmp
-            print(klasa_wych)
+            lista_tmp2.append(pobierz)
+
             pobierz = input()
+        wychowawca[wych_klucz] = lista_tmp2
+        print(klasa_wych)
+        print(wychowawca)
+
 
     # if pobierz == "nauczyciel":
-
 
 
 

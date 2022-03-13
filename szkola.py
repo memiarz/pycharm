@@ -81,24 +81,23 @@ while True:
                 lista_tmp.append(pobierz)
                 nauczyciel_klasy[pobierz] = lista_tmp2
 
+                nauczyciel[naucz_imie] = lista_tmp
                 pobierz = input()
-            # nauczyciel[naucz_imie] = lista_tmp        # co to jest? coś ważnego?
+                    # co to jest? coś ważnego?
 
             if pobierz in nauczyciel_klasy.keys():
                 duplikat_klucz = nauczyciel_klasy[pobierz]
-                # print()
-                # print(duplikat)
-                # print()
                 lista_duplikat = duplikat_klucz + lista_tmp2
-
                 nauczyciel_klasy[pobierz] = lista_duplikat
 
+                lista_tmp.append(pobierz)
+                nauczyciel[naucz_imie] = lista_tmp
 
                 pobierz = input()
 
 
-    if pobierz == "end":
-        break
+        if pobierz == "end":
+            break
 
 
 print()

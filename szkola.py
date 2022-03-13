@@ -17,9 +17,8 @@
 
 ### nauczyciel:
 
-# nauczyciel = {"Jan Dlugosz": ["Jezyk Polski", "1a", "1b"], "Maria Konopnicka": ["Jezyk Polski", "2a", "2b", "2c"]}
-# nauczyciel2 = {"1a": ["Jezyk Polski", "Jan Dlugosz"]}
-
+# nauczyciel = {"Jan Dlugosz": ["Jezyk Polski", "1a", "1b"], "Maria Konopnicka": ["Jezyk Polski", "2a", "2b", "2c"]}  ### jest
+# nauczyciel2 = {"1a": ["Jezyk Polski", "Jan Dlugosz"]}     ### jest
 
 
 # uczen = ["Marcin", "1a", ""]
@@ -34,7 +33,7 @@ klasa_wych = {}
 wychowawca = {}
 
 nauczyciel = {}
-naucz_klucz = 0
+nauczyciel_klasy = {}
 
 
 while True:
@@ -57,38 +56,41 @@ while True:
             pobierz = input()
 
         wychowawca[wych_klucz] = lista_tmp2
-        print(klasa_wych)
-        print(wychowawca)
 
 
 
     if pobierz == "nauczyciel":
         print("jestem w nauczycielu")
         lista_tmp = []
+        lista_tmp2 = []
 
-        pobierz = input()
+        pobierz = input()   #imię nauczyciela
         naucz_imie = pobierz
-        pobierz = input()
+        lista_tmp2.append(naucz_imie)
 
+        pobierz = input()   # przedmiot nauczyciela
         lista_tmp.append(pobierz)
+        lista_tmp2.append(pobierz)  #pobieranie przedmiotu nauczyciela
+        lista_tmp2.reverse()
 
         pobierz = input()
         while len(pobierz) == 2:
             lista_tmp.append(pobierz)
+            nauczyciel_klasy[pobierz] = lista_tmp2
 
             pobierz = input()
 
         nauczyciel[naucz_imie] = lista_tmp
-        print(nauczyciel)
 
     if pobierz == "end":
         break
 
 
 
-    # print(klasa_wych)
-    # print(wychowawca)
-    # print(nauczyciel)
+print(klasa_wych)
+print(wychowawca)
+print(nauczyciel)
+print(nauczyciel_klasy)
 
 
 print("elo, elo, koniec")

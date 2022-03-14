@@ -26,7 +26,6 @@
 #
 
 
-
 import sys
 
 pobierz = input()
@@ -45,6 +44,7 @@ uczniowie_lista = []
 uczniowie_klasy_slownik = {}
 
 wszystkie_klasy = []
+
 
 
 while True:
@@ -108,9 +108,6 @@ while True:
 
                 pobierz = input()
 
-# polecenie dict() ?
-# elify
-
     if pobierz == "uczen":
         tmp = []
         uczen_imie = input()
@@ -129,22 +126,10 @@ while True:
             dodanie_do_klasy = lista_uczniow_w_klasie + tmp
             uczniowie_wg_klas[uczen_klasa] = dodanie_do_klasy
 
-
         pobierz = input()
-
 
         if pobierz == "koniec":
             break
-
-
-# #
-# print("Klasa wychwowawcy: ", klasa_wych)
-
-# if sys.argv[1:] not in [uczniowie_klasy_slownik.values(),]:
-#     print("Błąddddddddd!!!")
-#     exit()
-
-
 
 # klasa: (gotowe)
 if len(sys.argv[1]) == 2:
@@ -154,30 +139,32 @@ if len(sys.argv[1]) == 2:
     elif sys.argv[1] not in klasa_wych.keys():
         print("Klasa", sys.argv[1], "nie ma wychowawcy")
         print("Uczniowie", sys.argv[1], ": ", uczniowie_wg_klas[sys.argv[1]])
+        exit()
     elif sys.argv[1] in uczniowie_klasy_slownik.values():
         print("Wychowawca", sys.argv[1], ": ", klasa_wych[sys.argv[1]])
         print("Uczniowie", sys.argv[1], ": ", uczniowie_wg_klas[sys.argv[1]])
+        exit()
 
-# wychowawca: (gotowe)
+# wychowawca: (gotowe):
+
 if sys.argv[1] in wychowawcy_lista:
     uczniowie_wychowawcy_lst = []
-    if sys.argv[1]  in wychowawca.keys():
+    if sys.argv[1] in wychowawca.keys():
         for x in wychowawca[sys.argv[1]]:
             for uczniowie in uczniowie_wg_klas[x]:
                 uczniowie_wychowawcy_lst.append(uczniowie)
-        print("Uczniowie", sys.argv[1], ": ", uczniowie_wychowawcy_lst, end=", ")
+        print()
+        print("Uczniowie nauczyciela", sys.argv[1], ": ", uczniowie_wychowawcy_lst, end=", ")
+        print("\n")
 
 # uczeń:
+
 if sys.argv[1] in uczniowie_klasy_slownik.keys():
     ttt = uczniowie_klasy_slownik.get(sys.argv[1])
-    print("\nLekcje ucznia", sys.argv[1], "i jego nauczyciel:", nauczyciel_klasy[ttt])
+    print("\nLekcje ucznia", sys.argv[1], "i nauczyciel przedmiotu:", nauczyciel_klasy[ttt])
+    print()
 
-    #
-    # klasa_wych: {'1a': ['Krzysztof Baczynski'], '1b': ['Krzysztof Baczynski'], '2a': ['Krzysztof Baczynski'],
-    #               '1c': ['Jan Brzechwa'], '2b': ['Jan Brzechwa']}
-    #
-
-# nauczyciel:
+# nauczyciel:   #gotowe
 if sys.argv[1] in nauczyciele_lista:
     klasy_nauczycieli = nauczyciel[sys.argv[1]]
     klasy_nauczycieli.pop(0)
@@ -190,7 +177,18 @@ if sys.argv[1] in nauczyciele_lista:
 
         elif element not in klasa_wych:
             continue
-    print("\nWychowawcy klas z którymi na zajęcia nauczyciel", sys.argv[1], ": ", nauczyciele_lista_lst)
+    nauczyciele2 = set(nauczyciele_lista_lst)    # usuwa duplikaty z listy (w princie kontynuacja: "list")
+    print("\nWychowawcy klas z którymi ma lekcje nauczyciel", sys.argv[1], ": ", list(nauczyciele2))
+    print()
+
+
+
+
+
+
+
+
+
 
 
     # for element in klasy_nauczycieli:

@@ -137,17 +137,25 @@ while True:
             break
 
 
-
-
+# #
+# print("Klasa wychwowawcy: ", klasa_wych)
 
 # if sys.argv[1:] not in [uczniowie_klasy_slownik.values(),]:
 #     print("Błąddddddddd!!!")
 #     exit()
 
+
+
 # klasa: (gotowe)
 if len(sys.argv[1]) == 2:
-    if sys.argv[1] in uczniowie_klasy_slownik.values():
-        print(F"Wychowawca", sys.argv[1], ": ", klasa_wych[sys.argv[1]])
+    if sys.argv[1] not in uczniowie_wg_klas.keys():
+        print("Nie ma takiej klasy")
+        exit()
+    elif sys.argv[1] not in klasa_wych.keys():
+        print("Klasa", sys.argv[1], "nie ma wychowawcy")
+        print("Uczniowie", sys.argv[1], ": ", uczniowie_wg_klas[sys.argv[1]])
+    elif sys.argv[1] in uczniowie_klasy_slownik.values():
+        print("Wychowawca", sys.argv[1], ": ", klasa_wych[sys.argv[1]])
         print("Uczniowie", sys.argv[1], ": ", uczniowie_wg_klas[sys.argv[1]])
 
 # wychowawca: (gotowe)

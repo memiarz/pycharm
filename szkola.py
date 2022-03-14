@@ -5,61 +5,28 @@
 # uczen = lekcje ucznia  i nauczyciele prowadzący lekcje
  '''''''''
 
-### uczeń:
-
-# klasa_wych = {"1a": ["wychowawca", "Krzysztof Baczynski",]} ### jest
-# klasa_uczn = {"1a": ["uczen1", "uczen2", "uczen3"]}
-
-### wychowawca:
-
-# wychowawca = {"Krzysztof Baczynski" : ["1a", "3c"], "Jan Brzechwa" : ["1c", "2b"]}  ### jest
-# uczniowie wychowawcy
-
-### nauczyciel:
-
-# nauczyciel = {"Jan Dlugosz": ["Jezyk Polski", "1a", "1b"], "Maria Konopnicka": ["Jezyk Polski", "2a", "2b", "2c"]}  ### jest
-# up trzeba usunąć duplikatky
-# nauczyciel2 = {"1a": ["Jezyk Polski", "Jan Dlugosz"]}     ### jest
-
-
-# uczen = ["Marcin", "1a", ""]
-#
-
-
 import sys
 
 pobierz = input()
-
 klasa_wych = {}
 wychowawca = {}
-
 nauczyciel = {}
 nauczyciel_klasy = {}
 uczniowie_wg_klas = {}
-
 wychowawcy_lista = []
 nauczyciele_lista = []
-
 uczniowie_lista = []
 uczniowie_klasy_slownik = {}
 
-wszystkie_klasy = []
-
-
-
 while True:
     if pobierz == "wychowawca":
-
         lista_tmp = []
         lista_tmp2 = []
         # lista_tmp.append(pobierz)     # dodaje "wychowawca" do listy, ale chyba nie potrzebne
-
         pobierz = input()
         wychowawcy_lista.append(pobierz)
         lista_tmp.append(pobierz)
         wych_klucz = pobierz      # pobieranie do drugiego wyszukiwanie ("wychowawca")
-
-
         pobierz = input()
         while len(pobierz) == 2:
             klasa_wych[pobierz] = lista_tmp
@@ -69,9 +36,7 @@ while True:
 
         wychowawca[wych_klucz] = lista_tmp2
 
-
     if pobierz == "nauczyciel":
-
         lista_tmp = []
         lista_tmp2 = []
 
@@ -84,7 +49,6 @@ while True:
         lista_tmp.append(pobierz)
         lista_tmp2.append(pobierz)  #pobieranie przedmiotu nauczyciela
         lista_tmp2.reverse()
-        # lista_duplikat = lista_tmp2
 
         pobierz = input()
         while len(pobierz) == 2:
@@ -92,17 +56,13 @@ while True:
             if pobierz not in nauczyciel_klasy.keys():
                 lista_tmp.append(pobierz)
                 nauczyciel_klasy[pobierz] = lista_tmp2
-
                 nauczyciel[naucz_imie] = lista_tmp
                 pobierz = input()
-                    # co to jest? coś ważnego?
 
             if pobierz in nauczyciel_klasy.keys():
                 duplikat_klucz = nauczyciel_klasy[pobierz]
                 lista_duplikat = duplikat_klucz + lista_tmp2
-
                 nauczyciel_klasy[pobierz] = lista_duplikat
-
                 lista_tmp.append(pobierz)
                 nauczyciel[naucz_imie] = lista_tmp
 
@@ -114,12 +74,9 @@ while True:
         uczen_klasa = input()
         uczniowie_lista.append(uczen_imie)  #dodanie ucznia do listy wszystkich uczniów (do sys.argv)
         tmp.append(uczen_imie)
-
         uczniowie_klasy_slownik[uczen_imie] = uczen_klasa
-
         if uczen_klasa not in uczniowie_wg_klas.keys():
             uczniowie_wg_klas[uczen_klasa] = tmp
-
 
         elif uczen_klasa in uczniowie_wg_klas.keys():
             lista_uczniow_w_klasie = uczniowie_wg_klas[uczen_klasa]
@@ -127,26 +84,29 @@ while True:
             uczniowie_wg_klas[uczen_klasa] = dodanie_do_klasy
 
         pobierz = input()
-
         if pobierz == "koniec":
             break
 
-# klasa: (gotowe)
+
+# klasa:
 if len(sys.argv[1]) == 2:
     if sys.argv[1] not in uczniowie_wg_klas.keys():
         print("Nie ma takiej klasy")
         exit()
     elif sys.argv[1] not in klasa_wych.keys():
+        print()
         print("Klasa", sys.argv[1], "nie ma wychowawcy")
         print("Uczniowie", sys.argv[1], ": ", uczniowie_wg_klas[sys.argv[1]])
+        print()
         exit()
     elif sys.argv[1] in uczniowie_klasy_slownik.values():
+        print()
         print("Wychowawca", sys.argv[1], ": ", klasa_wych[sys.argv[1]])
         print("Uczniowie", sys.argv[1], ": ", uczniowie_wg_klas[sys.argv[1]])
+        print()
         exit()
 
-# wychowawca: (gotowe):
-
+# wychowawca:
 if sys.argv[1] in wychowawcy_lista:
     uczniowie_wychowawcy_lst = []
     if sys.argv[1] in wychowawca.keys():
@@ -158,23 +118,20 @@ if sys.argv[1] in wychowawcy_lista:
         print("\n")
 
 # uczeń:
-
 if sys.argv[1] in uczniowie_klasy_slownik.keys():
     ttt = uczniowie_klasy_slownik.get(sys.argv[1])
     print("\nLekcje ucznia", sys.argv[1], "i nauczyciel przedmiotu:", nauczyciel_klasy[ttt])
     print()
 
-# nauczyciel:   #gotowe
+# nauczyciel:
 if sys.argv[1] in nauczyciele_lista:
     klasy_nauczycieli = nauczyciel[sys.argv[1]]
     klasy_nauczycieli.pop(0)
     nauczyciele_lista_lst = []
-
     for element in klasy_nauczycieli:
         if element in klasa_wych:
             for klasy in klasa_wych[element]:
                 nauczyciele_lista_lst.append(klasy)
-
         elif element not in klasa_wych:
             continue
     nauczyciele2 = set(nauczyciele_lista_lst)    # usuwa duplikaty z listy (w princie kontynuacja: "list")
@@ -190,6 +147,27 @@ if sys.argv[1] in nauczyciele_lista:
 
 
 
+
+
+
+    ### uczeń:
+
+    # klasa_wych = {"1a": ["wychowawca", "Krzysztof Baczynski",]} ### jest
+    # klasa_uczn = {"1a": ["uczen1", "uczen2", "uczen3"]}
+
+    ### wychowawca:
+
+    # wychowawca = {"Krzysztof Baczynski" : ["1a", "3c"], "Jan Brzechwa" : ["1c", "2b"]}  ### jest
+    # uczniowie wychowawcy
+
+    ### nauczyciel:
+
+    # nauczyciel = {"Jan Dlugosz": ["Jezyk Polski", "1a", "1b"], "Maria Konopnicka": ["Jezyk Polski", "2a", "2b", "2c"]}  ### jest
+    # up trzeba usunąć duplikatky
+    # nauczyciel2 = {"1a": ["Jezyk Polski", "Jan Dlugosz"]}     ### jest
+
+    # uczen = ["Marcin", "1a", ""]
+    #
 
     # for element in klasy_nauczycieli:
     #     if element in klasa_wych:

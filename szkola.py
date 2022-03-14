@@ -44,6 +44,7 @@ nauczyciele_lista = []
 uczniowie_lista = []
 uczniowie_klasy_slownik = {}
 
+wszystkie_klasy = []
 
 
 while True:
@@ -138,67 +139,128 @@ while True:
 
 
 
+
+# if sys.argv[1:] not in [uczniowie_klasy_slownik.values(),]:
+#     print("Błąddddddddd!!!")
+#     exit()
+
+# klasa: (gotowe)
 if len(sys.argv[1]) == 2:
-    print(F"Wychowawca: ", klasa_wych[sys.argv[1]])
-    print("Uczniowie: ", uczniowie_wg_klas[sys.argv[1]])
-# else:
-    # print("Błąd!")
-    # print(uczniowie_wg_klas)
+    if sys.argv[1] in uczniowie_klasy_slownik.values():
+        print(F"Wychowawca: ", klasa_wych[sys.argv[1]])
+        print("Uczniowie: ", uczniowie_wg_klas[sys.argv[1]])
 
-print("Lista wychowawców: ", wychowawcy_lista)
-#
-#
-arg1 = sys.argv[1]
-arg2 = sys.argv[2]
-# arg3 = sys.argv[3]        # try/except
-
-wpis = ' '.join([arg1, arg2])
-#
 # wychowawca:
-
-if wpis in wychowawcy_lista:
-    for x in wychowawca[wpis]:
-        for uczniowie in uczniowie_wg_klas[x]:
-            print(uczniowie)
-
-
-
-if wpis in nauczyciele_lista:
-    ...
+if sys.argv[1] in wychowawcy_lista:
+    if sys.argv[1] not in wychowawca.keys():
+        print("Błąd! Nie ma takiego wychowawcy")
+    else:
+        for x in wychowawca[sys.argv[1]]:
+            for uczniowie in uczniowie_wg_klas[x]:
+                print(uczniowie)
 
 
 # uczeń:
-#
-if wpis in uczniowie_klasy_slownik.keys():
-    ttt = uczniowie_klasy_slownik.get(wpis)
+if sys.argv[1] in uczniowie_klasy_slownik.keys():
+    ttt = uczniowie_klasy_slownik.get(sys.argv[1])
     print(nauczyciel_klasy[ttt])
+
+    #
+    # klasa_wych: {'1a': ['Krzysztof Baczynski'], '1b': ['Krzysztof Baczynski'], '2a': ['Krzysztof Baczynski'],
+    #               '1c': ['Jan Brzechwa'], '2b': ['Jan Brzechwa']}
+    #
+
+if sys.argv[1] in nauczyciele_lista:
+    klasy_nauczycieli = nauczyciel[sys.argv[1]]
+    klasy_nauczycieli.pop(0)
+    print(klasy_nauczycieli)
+
+    for element in klasy_nauczycieli:
+        if element in klasa_wych:
+            for klasy in klasa_wych[element]:
+                print(klasy)
+        elif element not in klasa_wych:
+            continue
+
+
+
+    #
+    # for element in klasy_nauczycieli:
+    #     for klasy in klasa_wych[element]:
+    #         print(klasy)
+    #
+    # for element in nauczyciel[sys.argv[1]]:
+    #     for klasy in klasa_wych[element]:
+    #         print(klasy)
+
+
+
+
+
 
 
 # print(uczniowie_wg_klas.keys())
 
 
+#
+# print()
+# print("Klasa wychwowawcy: ", klasa_wych)
+# print()
+# print("Wychowawca: ", wychowawca)
+# print()
+# print("Nauczyciel: ", nauczyciel)
+# print()
+# print("Nauczyciele klasy :", nauczyciel_klasy)
+# print()
+# print()
+# print("Uczniowie wg klas: ", uczniowie_wg_klas)
+# print()
+# print("Wychowawcy lista: ", wychowawcy_lista)
+# print()
+# print("Nauczyciele lista: ", nauczyciele_lista)
+# print()
+# print("Uczniowie lista: ", uczniowie_lista)
+# print()
+# print("Uczniowie_klasy_slownik: ", uczniowie_klasy_slownik)
+# print("elo, elo, koniec")
+#
 
-# print()
-# print(klasa_wych)
-# print()
-# print(wychowawca)
-# print()
-# print(nauczyciel)
-# print()
-# print(nauczyciel_klasy)
-# print()
-# print()
-# print(uczniowie_wg_klas)
-# print()
-# print(wychowawcy_lista)
-# print()
-# print(nauczyciele_lista)
-# print()
-# print(uczniowie_lista)
-# print()
-# print(uczniowie_klasy_slownik)
-print("elo, elo, koniec")
 
+
+
+
+
+
+# # wpis = sys.argv
+# #
+# if len(sys.argv) > 2:
+#     arg1 = sys.argv[1]
+#     arg2 = sys.argv[2]
+#     # arg3 = sys.argv[3]
+#
+#
+#     wpis = ' '.join([arg1, arg2])
+#
+#     #wychowawca
+#     if wpis in wychowawcy_lista:
+#         for x in wychowawca[wpis]:
+#             for uczniowie in uczniowie_wg_klas[x]:
+#                 print(uczniowie)
+#
+#     # uczeń:
+#
+#     if wpis in uczniowie_klasy_slownik.keys():
+#         ttt = uczniowie_klasy_slownik.get(wpis)
+#         print(nauczyciel_klasy[ttt])
+#
+#     # Nauczyciel: {'Jan Dlugosz': ['Jezyk Polski', '1a', '1b', '1c'],
+#
+#     #nauczyciel:
+#
+#     if wpis in nauczyciele_lista:
+#          print(nauczyciel[wpis])
+#
+#
 
 
 

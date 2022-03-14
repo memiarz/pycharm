@@ -147,42 +147,57 @@ while True:
 # klasa: (gotowe)
 if len(sys.argv[1]) == 2:
     if sys.argv[1] in uczniowie_klasy_slownik.values():
-        print(F"Wychowawca: ", klasa_wych[sys.argv[1]])
-        print("Uczniowie: ", uczniowie_wg_klas[sys.argv[1]])
+        print(F"Wychowawca", sys.argv[1], ": ", klasa_wych[sys.argv[1]])
+        print("Uczniowie", sys.argv[1], ": ", uczniowie_wg_klas[sys.argv[1]])
 
-# wychowawca:
+# wychowawca: (gotowe)
 if sys.argv[1] in wychowawcy_lista:
-    if sys.argv[1] not in wychowawca.keys():
-        print("Błąd! Nie ma takiego wychowawcy")
-    else:
+    uczniowie_wychowawcy_lst = []
+    if sys.argv[1]  in wychowawca.keys():
         for x in wychowawca[sys.argv[1]]:
             for uczniowie in uczniowie_wg_klas[x]:
-                print(uczniowie)
-
+                uczniowie_wychowawcy_lst.append(uczniowie)
+        print("Uczniowie", sys.argv[1], ": ", uczniowie_wychowawcy_lst, end=", ")
 
 # uczeń:
 if sys.argv[1] in uczniowie_klasy_slownik.keys():
     ttt = uczniowie_klasy_slownik.get(sys.argv[1])
-    print(nauczyciel_klasy[ttt])
+    print("\nLekcje ucznia", sys.argv[1], "i jego nauczyciel:", nauczyciel_klasy[ttt])
 
     #
     # klasa_wych: {'1a': ['Krzysztof Baczynski'], '1b': ['Krzysztof Baczynski'], '2a': ['Krzysztof Baczynski'],
     #               '1c': ['Jan Brzechwa'], '2b': ['Jan Brzechwa']}
     #
 
+# nauczyciel:
 if sys.argv[1] in nauczyciele_lista:
     klasy_nauczycieli = nauczyciel[sys.argv[1]]
     klasy_nauczycieli.pop(0)
-    print(klasy_nauczycieli)
+    nauczyciele_lista_lst = []
 
     for element in klasy_nauczycieli:
         if element in klasa_wych:
             for klasy in klasa_wych[element]:
-                print(klasy)
+                nauczyciele_lista_lst.append(klasy)
+
         elif element not in klasa_wych:
             continue
+    print("\nWychowawcy klas z którymi na zajęcia nauczyciel", sys.argv[1], ": ", nauczyciele_lista_lst)
 
 
+    # for element in klasy_nauczycieli:
+    #     if element in klasa_wych:
+    #         for klasy in klasa_wych[element]:
+    #             print(klasy)
+    #     elif element not in klasa_wych:
+    #         continue
+
+
+
+
+
+# else:
+#     print("Błąd! Nie znaleziono wyszukiwania!")
 
     #
     # for element in klasy_nauczycieli:

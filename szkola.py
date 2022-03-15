@@ -7,6 +7,15 @@
 
 import sys
 
+file_path = r"szkola.txt"
+with open(file_path, "r") as plik:
+    for linia in plik:
+        wszystko = plik.read()
+
+if sys.argv[1] not in wszystko:
+    print("Nie znaleziono w bazie")
+    exit()
+
 pobierz = input()
 klasa_wych = {}
 wychowawca = {}
@@ -22,7 +31,6 @@ while True:
     if pobierz == "wychowawca":
         lista_tmp = []
         lista_tmp2 = []
-        # lista_tmp.append(pobierz)     # dodaje "wychowawca" do listy, ale chyba nie potrzebne
         pobierz = input()
         wychowawcy_lista.append(pobierz)
         lista_tmp.append(pobierz)
@@ -31,9 +39,7 @@ while True:
         while len(pobierz) == 2:
             klasa_wych[pobierz] = lista_tmp
             lista_tmp2.append(pobierz)
-
             pobierz = input()
-
         wychowawca[wych_klucz] = lista_tmp2
 
     if pobierz == "nauczyciel":
@@ -52,13 +58,11 @@ while True:
 
         pobierz = input()
         while len(pobierz) == 2:
-
             if pobierz not in nauczyciel_klasy.keys():
                 lista_tmp.append(pobierz)
                 nauczyciel_klasy[pobierz] = lista_tmp2
                 nauczyciel[naucz_imie] = lista_tmp
                 pobierz = input()
-
             if pobierz in nauczyciel_klasy.keys():
                 duplikat_klucz = nauczyciel_klasy[pobierz]
                 lista_duplikat = duplikat_klucz + lista_tmp2
@@ -77,7 +81,6 @@ while True:
         uczniowie_klasy_slownik[uczen_imie] = uczen_klasa
         if uczen_klasa not in uczniowie_wg_klas.keys():
             uczniowie_wg_klas[uczen_klasa] = tmp
-
         elif uczen_klasa in uczniowie_wg_klas.keys():
             lista_uczniow_w_klasie = uczniowie_wg_klas[uczen_klasa]
             dodanie_do_klasy = lista_uczniow_w_klasie + tmp
@@ -87,13 +90,9 @@ while True:
         if pobierz == "koniec":
             break
 
-
 # klasa:
 if len(sys.argv[1]) == 2:
-    if sys.argv[1] not in uczniowie_wg_klas.keys():
-        print("Nie ma takiej klasy")
-        exit()
-    elif sys.argv[1] not in klasa_wych.keys():
+    if sys.argv[1] not in klasa_wych.keys():
         print()
         print("Klasa", sys.argv[1], "nie ma wychowawcy")
         print("Uczniowie", sys.argv[1], ": ", uczniowie_wg_klas[sys.argv[1]])
@@ -140,6 +139,30 @@ if sys.argv[1] in nauczyciele_lista:
 
 
 
+
+
+
+
+    # if sys.argv[1] not in uczniowie_wg_klas.keys():
+    #     print("Nie ma takiej klasy")
+    #     exit()
+
+
+    # for linia in plik:
+    #     print(linia.strip())
+
+
+
+# file_path = r"szkola.txt"
+# plik = open(file_path, "r")
+# # plik.seek(0)
+# dane_z_pliku = plik.read()
+# split = dane_z_pliku.split()
+# # print(dane_z_pliku)
+#
+# if sys.argv[1] not in dane_z_pliku:     #uwaga na nawiasy kwadratowe
+#     print("Nie znaleziono w bazie")
+#
 
 
 

@@ -1,4 +1,6 @@
 '''''''''
+# wszystkie dane wpisujemy z cudzysłowiem
+
 # nazwa klasy = wychowawca i uczniowie
 # wychowawca = uczniowie wychowawcy
 # nauczyciel = wychowawcy wszystkich klas, z którym ma zajęcia nauczyciel
@@ -9,12 +11,20 @@ import sys
 
 file_path = r"szkola.txt"
 with open(file_path, "r") as plik:
-    for linia in plik:
-        wszystko = plik.read()
+    wszystko = plik.read().split("\n")
 
+# print(wszystko)
 if sys.argv[1] not in wszystko:
     print("Nie znaleziono w bazie")
+    # print(wszystko)
     exit()
+
+# file_path = r"szkola.txt"
+# with open(file_path, "r") as plik:
+#     for linia in plik:
+#         wszystko = plik.read()
+#         sycko.append(wszystko)
+
 
 pobierz = input()
 klasa_wych = {}
@@ -96,13 +106,11 @@ if len(sys.argv[1]) == 2:
         print()
         print("Klasa", sys.argv[1], "nie ma wychowawcy")
         print("Uczniowie", sys.argv[1], ": ", uczniowie_wg_klas[sys.argv[1]])
-        print()
         exit()
     elif sys.argv[1] in uczniowie_klasy_slownik.values():
         print()
         print("Wychowawca", sys.argv[1], ": ", klasa_wych[sys.argv[1]])
         print("Uczniowie", sys.argv[1], ": ", uczniowie_wg_klas[sys.argv[1]])
-        print()
         exit()
 
 # wychowawca:
@@ -114,13 +122,11 @@ if sys.argv[1] in wychowawcy_lista:
                 uczniowie_wychowawcy_lst.append(uczniowie)
         print()
         print("Uczniowie nauczyciela", sys.argv[1], ": ", uczniowie_wychowawcy_lst, end=", ")
-        print("\n")
 
 # uczeń:
 if sys.argv[1] in uczniowie_klasy_slownik.keys():
     ttt = uczniowie_klasy_slownik.get(sys.argv[1])
     print("\nLekcje ucznia", sys.argv[1], "i nauczyciel przedmiotu:", nauczyciel_klasy[ttt])
-    print()
 
 # nauczyciel:
 if sys.argv[1] in nauczyciele_lista:
@@ -135,7 +141,6 @@ if sys.argv[1] in nauczyciele_lista:
             continue
     nauczyciele2 = set(nauczyciele_lista_lst)    # usuwa duplikaty z listy (w princie kontynuacja: "list")
     print("\nWychowawcy klas z którymi ma lekcje nauczyciel", sys.argv[1], ": ", list(nauczyciele2))
-    print()
 
 
 

@@ -1,5 +1,5 @@
 '''''''''
-# wszystkie dane wpisujemy z cudzysłowiem
+# wszystkie dane wpisujemy z cudzysłowiem #
 
 # nazwa klasy = wychowawca i uczniowie
 # wychowawca = uczniowie wychowawcy

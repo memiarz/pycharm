@@ -34,6 +34,49 @@ def historia_zakup_sprzedaz():
     hist_tmp = []
 
 
+def zakup_argv():
+    global hist_tmp, produkt, cena, szt
+
+    produkt = sys.argv[2]
+    cena_zakupu = int(sys.argv[3])
+    szt_zakup = int(sys.argv[4])
+
+    hist_tmp.append(sys.argv[1])
+    dodawanie_historii(sys.argv[1])
+    hist_tmp.append(produkt)
+    dodawanie_historii(produkt)
+    hist_tmp.append(cena_zakupu)
+    dodawanie_historii(cena_zakupu)
+    hist_tmp.append(szt_zakup)
+    dodawanie_historii(szt_zakup)
+
+    historia.append(hist_tmp)
+    hist_tmp = []
+
+def sprzedaz_argv():
+    global hist_tmp, produkt, cena, szt
+
+    produkt = sys.argv[2]
+    cena = int(sys.argv[3])
+    szt = int(sys.argv[4])
+
+    hist_tmp.append(sys.argv[1])
+    dodawanie_historii(sys.argv[1])
+    hist_tmp.append(produkt)
+    dodawanie_historii(produkt)
+    hist_tmp.append(cena)
+    dodawanie_historii(cena)
+    hist_tmp.append(szt)
+    dodawanie_historii(szt)
+
+    historia.append(hist_tmp)
+    hist_tmp = []
+
+
+
+
+
+
 # def wszystko():
 #     global akcja, hist_tmp, saldo
 
@@ -177,23 +220,10 @@ if sys.argv[1] == "saldo":
     saldo += kwota
 
 if sys.argv[1] == "zakup":
-    produkt = sys.argv[2]
-    cena_zakupu = int(sys.argv[3])
-    szt_zakup = int(sys.argv[4])
 
-    hist_tmp.append(sys.argv[1])
-    dodawanie_historii(sys.argv[1])
-    hist_tmp.append(produkt)
-    dodawanie_historii(produkt)
-    hist_tmp.append(cena_zakupu)
-    dodawanie_historii(cena_zakupu)
-    hist_tmp.append(szt_zakup)
-    dodawanie_historii(szt_zakup)
+    zakup_argv()
 
-    historia.append(hist_tmp)
-    hist_tmp = []
-
-    saldo = saldo - (cena_zakupu *szt_zakup)
+    saldo = saldo - (cena *szt)
     if saldo < 0:
         print()
         print("Nie można dokonać zakupu!" "\nZa mało pieniędy na koncie!")
@@ -201,40 +231,27 @@ if sys.argv[1] == "zakup":
         exit()
 
     if produkt not in magazyn:
-        magazyn[produkt] = szt_zakup
+        magazyn[produkt] = szt
     else:
         x = magazyn[produkt]
-        ilosc_szt = x + szt_zakup
+        ilosc_szt = x + szt
         magazyn[produkt] = ilosc_szt
 
 if sys.argv[1] == "sprzedaz":
-    produkt_sprzedaz = sys.argv[2]
-    cena_sprzedazy = int(sys.argv[3])
-    szt_sprzedaz = int(sys.argv[4])
 
-    hist_tmp.append(sys.argv[1])
-    dodawanie_historii(sys.argv[1])
-    hist_tmp.append(produkt_sprzedaz)
-    dodawanie_historii(produkt_sprzedaz)
-    hist_tmp.append(cena_sprzedazy)
-    dodawanie_historii(cena_sprzedazy)
-    hist_tmp.append(szt_sprzedaz)
-    dodawanie_historii(szt_sprzedaz)
+    sprzedaz_argv()
 
-    historia.append(hist_tmp)
-    hist_tmp = []
-
-    if produkt_sprzedaz not in magazyn:
+    if produkt not in magazyn:
         print()
         print("Błąd!""\nNie można sprzedać produktu którego nie ma w magazynie!")
         print()
         exit()
-    if produkt_sprzedaz in magazyn:
-        x = magazyn[produkt_sprzedaz]
-        ilosc_szt = x - szt_sprzedaz
-        magazyn[produkt_sprzedaz] = ilosc_szt
+    if produkt in magazyn:
+        x = magazyn[produkt]
+        ilosc_szt = x - szt
+        magazyn[produkt] = ilosc_szt
         if ilosc_szt == 0:
-            del magazyn[produkt_sprzedaz]
+            del magazyn[produkt]
         elif ilosc_szt < 0:
             print()
             print("Nieprawidłowa operacja: za duża ilość sprzedanych elementów!")

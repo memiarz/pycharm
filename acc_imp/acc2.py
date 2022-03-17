@@ -11,17 +11,24 @@ saldo = 0
 magazyn = {}
 ilosc_szt = 0
 
-def zakup_sprzedaz():
-    global hist_tmp
 
-    produkt_akcja = f.readline().strip()
-    cena_akcja = int(f.readline().strip())
-    szt_ilosc = int(f.readline().strip())
+def dodawanie_historii(argument):
+    f = r"C:\Users\MRC22\PycharmProjects\python-nauka\acc_imp\acc2.txt"
+    with open(f, "a") as plik:
+        plik.write(argument + "\n")
+
+
+def historia_zakup_sprzedaz():
+    global hist_tmp, produkt, cena, szt
+
+    produkt = f.readline().strip()
+    cena = int(f.readline().strip())
+    szt = int(f.readline().strip())
 
     hist_tmp.append(akcja)
-    hist_tmp.append(produkt_akcja)
-    hist_tmp.append(cena_akcja)
-    hist_tmp.append(szt_ilosc)
+    hist_tmp.append(produkt)
+    hist_tmp.append(cena)
+    hist_tmp.append(szt)
 
     historia.append(hist_tmp)
     hist_tmp = []
@@ -52,22 +59,11 @@ while True:
 
         saldo += (saldo_zmiana)
 
-
-
     elif akcja == "zakup":
-        produkt_zakup = f.readline().strip()
-        cena_zakupu = int(f.readline().strip())
-        szt_zakup = int(f.readline().strip())
 
-        hist_tmp.append(akcja)
-        hist_tmp.append(produkt_zakup)
-        hist_tmp.append(cena_zakupu)
-        hist_tmp.append(szt_zakup)
+        historia_zakup_sprzedaz()
 
-        historia.append(hist_tmp)
-        hist_tmp = []
-
-        saldo = saldo - (cena_zakupu * szt_zakup)
+        saldo = saldo - (cena * szt)
 
         if saldo < 0:
             print()
@@ -75,40 +71,31 @@ while True:
             print()
             exit()
 
-        if produkt_zakup not in magazyn:
-            magazyn[produkt_zakup] = szt_zakup
+        if produkt not in magazyn:
+            magazyn[produkt] = szt
         else:
-            x = magazyn[produkt_zakup]
-            ilosc_szt = x + szt_zakup
-            magazyn[produkt_zakup] = ilosc_szt
+            x = magazyn[produkt]
+            ilosc_szt = x + szt
+            magazyn[produkt] = ilosc_szt
 
     elif akcja == "sprzedaz":
-        produkt_sprzedaz = f.readline().strip()
-        cena_sprzedazy = int(f.readline().strip())
-        szt_sprzedaz = int(f.readline().strip())
 
-        hist_tmp.append(akcja)
-        hist_tmp.append(produkt_sprzedaz)
-        hist_tmp.append(cena_sprzedazy)
-        hist_tmp.append(szt_sprzedaz)
-        historia.append(hist_tmp)
-        hist_tmp = []
+        historia_zakup_sprzedaz()
 
-        saldo = saldo + (cena_sprzedazy * szt_sprzedaz)
+        saldo = saldo + (cena * szt)
 
-
-        if produkt_sprzedaz not in magazyn:
+        if produkt not in magazyn:
             print()
             print("Błąd!""\nNie można sprzedać produktu którego nie ma w magazynie!")
             print()
             exit()
-        if produkt_sprzedaz in magazyn:
-            x = magazyn[produkt_sprzedaz]
-            ilosc_szt = x - szt_sprzedaz
-            magazyn[produkt_sprzedaz] = ilosc_szt
+        if produkt in magazyn:
+            x = magazyn[produkt]
+            ilosc_szt = x - szt
+            magazyn[produkt] = ilosc_szt
 
             if ilosc_szt == 0:
-                del magazyn[produkt_sprzedaz]
+                del magazyn[produkt]
 
             elif ilosc_szt < 0:
                 print()
@@ -117,11 +104,32 @@ while True:
                 exit()
 
     akcja = f.readline().strip()
-    if akcja == "stop":
+    if akcja == "":
+        f.close()
         break
 
 
 
+
+
+
+
+# plik = r"C:\Users\MRC22\PycharmProjects\python-nauka\acc_imp\acc2.txt"
+# with open(plik, "a") as plik:
+#     plik.write("sprzedaz" + "\n")
+#     plik.write("oranzada" + "\n")
+#     plik.write("2500" + "\n")
+#     plik.write("2" + "\n")
+
+
+
+
+# plik_do_zapisu = "L5_zapis.txt"   #podajemy nazwę pliku jaki chcemy utworzyć
+#
+# tresc = "Jakiś tekst do zapisu..."
+#
+# with open(plik_do_zapisu, "w") as plik:     #tworzy nowy plik .txt
+#     plik.write(tresc)
 
 
 
@@ -168,12 +176,12 @@ if sys.argv[1] == "saldo":
     saldo += kwota
 
 if sys.argv[1] == "zakup":
-    produkt_zakup = sys.argv[2]
+    produkt = sys.argv[2]
     cena_zakupu = int(sys.argv[3])
     szt_zakup = int(sys.argv[4])
 
     hist_tmp.append(sys.argv[1])
-    hist_tmp.append(produkt_zakup)
+    hist_tmp.append(produkt)
     hist_tmp.append(cena_zakupu)
     hist_tmp.append(szt_zakup)
 
@@ -187,12 +195,12 @@ if sys.argv[1] == "zakup":
         print()
         exit()
 
-    if produkt_zakup not in magazyn:
-        magazyn[produkt_zakup] = szt_zakup
+    if produkt not in magazyn:
+        magazyn[produkt] = szt_zakup
     else:
-        x = magazyn[produkt_zakup]
+        x = magazyn[produkt]
         ilosc_szt = x + szt_zakup
-        magazyn[produkt_zakup] = ilosc_szt
+        magazyn[produkt] = ilosc_szt
 
 if sys.argv[1] == "sprzedaz":
     produkt_sprzedaz = sys.argv[2]

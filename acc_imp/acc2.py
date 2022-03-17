@@ -15,7 +15,7 @@ ilosc_szt = 0
 def dodawanie_historii(argument):
     f = r"C:\Users\MRC22\PycharmProjects\python-nauka\acc_imp\acc2.txt"
     with open(f, "a") as plik:
-        plik.write(argument + "\n")
+        plik.write(str(argument) + "\n")
 
 
 def historia_zakup_sprzedaz():
@@ -112,8 +112,6 @@ while True:
 
 
 
-
-
 # plik = r"C:\Users\MRC22\PycharmProjects\python-nauka\acc_imp\acc2.txt"
 # with open(plik, "a") as plik:
 #     plik.write("sprzedaz" + "\n")
@@ -167,8 +165,11 @@ if sys.argv[1] == "saldo":
     komentarz = sys.argv[3]
 
     hist_tmp.append(sys.argv[1])
+    dodawanie_historii(sys.argv[1])
     hist_tmp.append(kwota)
+    dodawanie_historii(kwota)
     hist_tmp.append(komentarz)
+    dodawanie_historii(komentarz)
 
     historia.append(hist_tmp)
     hist_tmp = []
@@ -181,9 +182,13 @@ if sys.argv[1] == "zakup":
     szt_zakup = int(sys.argv[4])
 
     hist_tmp.append(sys.argv[1])
+    dodawanie_historii(sys.argv[1])
     hist_tmp.append(produkt)
+    dodawanie_historii(produkt)
     hist_tmp.append(cena_zakupu)
+    dodawanie_historii(cena_zakupu)
     hist_tmp.append(szt_zakup)
+    dodawanie_historii(szt_zakup)
 
     historia.append(hist_tmp)
     hist_tmp = []
@@ -208,9 +213,13 @@ if sys.argv[1] == "sprzedaz":
     szt_sprzedaz = int(sys.argv[4])
 
     hist_tmp.append(sys.argv[1])
+    dodawanie_historii(sys.argv[1])
     hist_tmp.append(produkt_sprzedaz)
+    dodawanie_historii(produkt_sprzedaz)
     hist_tmp.append(cena_sprzedazy)
+    dodawanie_historii(cena_sprzedazy)
     hist_tmp.append(szt_sprzedaz)
+    dodawanie_historii(szt_sprzedaz)
 
     historia.append(hist_tmp)
     hist_tmp = []

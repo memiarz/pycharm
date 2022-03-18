@@ -37,7 +37,7 @@ def historia_zakup_sprzedaz():
 
 
 def zakup_argv():
-    global hist_tmp, produkt, cena, szt
+    global hist_tmp, produkt, cena, szt, saldo
 
     produkt = sys.argv[3]
     cena_zakupu = int(sys.argv[4])
@@ -55,8 +55,10 @@ def zakup_argv():
     historia.append(hist_tmp)
     hist_tmp = []
 
+    saldo = saldo - (cena * szt)
+
 def sprzedaz_argv():
-    global hist_tmp, produkt, cena, szt
+    global hist_tmp, produkt, cena, szt, saldo
 
     produkt = sys.argv[3]
     cena = int(sys.argv[4])
@@ -74,13 +76,23 @@ def sprzedaz_argv():
     historia.append(hist_tmp)
     hist_tmp = []
 
+    saldo = saldo + (cena * szt)
+
+
+def zakup_obliczenie_else():
+    global ilosc_szt, magazyn
+    x = magazyn[produkt]
+    ilosc_szt = x + szt
+    magazyn[produkt] = ilosc_szt
+
+def sprzedaz_obliczenie_if():
+    global ilosc_szt, magazyn
+    x = magazyn[produkt]
+    ilosc_szt = x - szt
+    magazyn[produkt] = ilosc_szt
 
 
 
-
-
-# def wszystko():
-#     global akcja, hist_tmp, saldo
 
 while True:
 
@@ -119,9 +131,7 @@ while True:
         if produkt not in magazyn:
             magazyn[produkt] = szt
         else:
-            x = magazyn[produkt]
-            ilosc_szt = x + szt
-            magazyn[produkt] = ilosc_szt
+            zakup_obliczenie_else()
 
     elif akcja == "sprzedaz":
 
@@ -131,13 +141,11 @@ while True:
 
         if produkt not in magazyn:
             print()
-            print("Błąd!""\nNie można sprzedać produktu którego nie ma w magazynie!")
+            print("Błąd!""\nNie ma takiego produktu w magazynie!")
             print()
             exit()
         if produkt in magazyn:
-            x = magazyn[produkt]
-            ilosc_szt = x - szt
-            magazyn[produkt] = ilosc_szt
+            sprzedaz_obliczenie_if()
 
             if ilosc_szt == 0:
                 del magazyn[produkt]
@@ -225,7 +233,7 @@ if sys.argv[2] == "zakup":
 
     zakup_argv()
 
-    saldo = saldo - (cena *szt)
+
     if saldo < 0:
         print()
         print("Nie można dokonać zakupu!" "\nZa mało pieniędy na koncie!")
@@ -235,9 +243,7 @@ if sys.argv[2] == "zakup":
     if produkt not in magazyn:
         magazyn[produkt] = szt
     else:
-        x = magazyn[produkt]
-        ilosc_szt = x + szt
-        magazyn[produkt] = ilosc_szt
+        zakup_obliczenie_else()
 
 if sys.argv[2] == "sprzedaz":
 
@@ -249,9 +255,9 @@ if sys.argv[2] == "sprzedaz":
         print()
         exit()
     if produkt in magazyn:
-        x = magazyn[produkt]
-        ilosc_szt = x - szt
-        magazyn[produkt] = ilosc_szt
+
+        sprzedaz_obliczenie_if()
+
         if ilosc_szt == 0:
             del magazyn[produkt]
         elif ilosc_szt < 0:
@@ -265,8 +271,8 @@ print()
 for element in historia:
     print(element)
 
-# print()
-# print("Saldo:", saldo)
+print()
+print("Saldo:", saldo)
 print()
 print("Magazyn:", magazyn)
 

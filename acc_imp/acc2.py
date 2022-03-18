@@ -1,6 +1,7 @@
 import sys
 
-f = open("acc2.txt")
+sciezka = sys.argv[1]
+f = open(sciezka)
 
 linia = f.readline().strip()
 
@@ -13,7 +14,8 @@ ilosc_szt = 0
 
 
 def dodawanie_historii(argument):
-    f = r"C:\Users\MRC22\PycharmProjects\python-nauka\acc_imp\acc2.txt"
+    # f = r"C:\Users\MRC22\PycharmProjects\python-nauka\acc_imp\acc2.txt"
+    f = sciezka
     with open(f, "a") as plik:
         plik.write(str(argument) + "\n")
 
@@ -37,12 +39,12 @@ def historia_zakup_sprzedaz():
 def zakup_argv():
     global hist_tmp, produkt, cena, szt
 
-    produkt = sys.argv[2]
-    cena_zakupu = int(sys.argv[3])
-    szt_zakup = int(sys.argv[4])
+    produkt = sys.argv[3]
+    cena_zakupu = int(sys.argv[4])
+    szt_zakup = int(sys.argv[5])
 
-    hist_tmp.append(sys.argv[1])
-    dodawanie_historii(sys.argv[1])
+    hist_tmp.append(sys.argv[2])
+    dodawanie_historii(sys.argv[2])
     hist_tmp.append(produkt)
     dodawanie_historii(produkt)
     hist_tmp.append(cena_zakupu)
@@ -56,12 +58,12 @@ def zakup_argv():
 def sprzedaz_argv():
     global hist_tmp, produkt, cena, szt
 
-    produkt = sys.argv[2]
-    cena = int(sys.argv[3])
-    szt = int(sys.argv[4])
+    produkt = sys.argv[3]
+    cena = int(sys.argv[4])
+    szt = int(sys.argv[5])
 
-    hist_tmp.append(sys.argv[1])
-    dodawanie_historii(sys.argv[1])
+    hist_tmp.append(sys.argv[2])
+    dodawanie_historii(sys.argv[2])
     hist_tmp.append(produkt)
     dodawanie_historii(produkt)
     hist_tmp.append(cena)
@@ -174,27 +176,27 @@ while True:
 
 
 
-if sys.argv[1] not in ["konto", "magazyn", "przeglad",
+if sys.argv[2] not in ["konto", "magazyn", "przeglad",
                        "saldo", "zakup", "sprzedaz"]:
     print()
     print("Niedozwolona akcja!")
     print()
     exit()
 
-if sys.argv[1] == "konto":
+if sys.argv[2] == "konto":
     print()
     print("Konto:", saldo)
 
-if sys.argv[1] == "magazyn":
+if sys.argv[2] == "magazyn":
     print()
     print("Magazyn: ", end="")
-    for produkt in sys.argv[2:]:
+    for produkt in sys.argv[3:]:
         print(f"{produkt} {magazyn.get(produkt, 0)} szt., ", end="",)
 
-if sys.argv[1] == "przeglad":
-    przeglad_od = int(sys.argv[2])
+if sys.argv[2] == "przeglad":
+    przeglad_od = int(sys.argv[3])
     try:
-        przeglad_do = int(sys.argv[3])
+        przeglad_do = int(sys.argv[4])
         print()
         print("Przeglad historii:", historia[przeglad_od:przeglad_do])
         print()
@@ -203,12 +205,12 @@ if sys.argv[1] == "przeglad":
         print("Przeglad historii:", historia[przeglad_od])
         print()
 
-if sys.argv[1] == "saldo":
-    kwota = int(sys.argv[2])
-    komentarz = sys.argv[3]
+if sys.argv[2] == "saldo":
+    kwota = int(sys.argv[3])
+    komentarz = sys.argv[4]
 
-    hist_tmp.append(sys.argv[1])
-    dodawanie_historii(sys.argv[1])
+    hist_tmp.append(sys.argv[2])
+    dodawanie_historii(sys.argv[2])
     hist_tmp.append(kwota)
     dodawanie_historii(kwota)
     hist_tmp.append(komentarz)
@@ -219,7 +221,7 @@ if sys.argv[1] == "saldo":
 
     saldo += kwota
 
-if sys.argv[1] == "zakup":
+if sys.argv[2] == "zakup":
 
     zakup_argv()
 
@@ -237,7 +239,7 @@ if sys.argv[1] == "zakup":
         ilosc_szt = x + szt
         magazyn[produkt] = ilosc_szt
 
-if sys.argv[1] == "sprzedaz":
+if sys.argv[2] == "sprzedaz":
 
     sprzedaz_argv()
 
@@ -263,8 +265,8 @@ print()
 for element in historia:
     print(element)
 
-print()
-print("Saldo:", saldo)
+# print()
+# print("Saldo:", saldo)
 print()
 print("Magazyn:", magazyn)
 

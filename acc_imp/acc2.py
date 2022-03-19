@@ -20,76 +20,76 @@ def dodawanie_historii(argument):
         plik.write(str(argument) + "\n")
 
 
-def historia_zakup_sprzedaz():
-    global hist_tmp, produkt, cena, szt
-
-    produkt = f.readline().strip()
-    cena = int(f.readline().strip())
-    szt = int(f.readline().strip())
-
-    hist_tmp.append(akcja)
-    hist_tmp.append(produkt)
-    hist_tmp.append(cena)
-    hist_tmp.append(szt)
-
-    historia.append(hist_tmp)
-    hist_tmp = []
-
-
-def zakup_argv():
-    global hist_tmp, produkt, cena, szt, saldo
-
-    produkt = sys.argv[3]
-    cena_zakupu = int(sys.argv[4])
-    szt_zakup = int(sys.argv[5])
-
-    hist_tmp.append(sys.argv[2])
-    dodawanie_historii(sys.argv[2])
-    hist_tmp.append(produkt)
-    dodawanie_historii(produkt)
-    hist_tmp.append(cena_zakupu)
-    dodawanie_historii(cena_zakupu)
-    hist_tmp.append(szt_zakup)
-    dodawanie_historii(szt_zakup)
-
-    historia.append(hist_tmp)
-    hist_tmp = []
-
-    saldo = saldo - (cena * szt)
-
-def sprzedaz_argv():
-    global hist_tmp, produkt, cena, szt, saldo
-
-    produkt = sys.argv[3]
-    cena = int(sys.argv[4])
-    szt = int(sys.argv[5])
-
-    hist_tmp.append(sys.argv[2])
-    dodawanie_historii(sys.argv[2])
-    hist_tmp.append(produkt)
-    dodawanie_historii(produkt)
-    hist_tmp.append(cena)
-    dodawanie_historii(cena)
-    hist_tmp.append(szt)
-    dodawanie_historii(szt)
-
-    historia.append(hist_tmp)
-    hist_tmp = []
-
-    saldo = saldo + (cena * szt)
+# def historia_zakup_sprzedaz():
+#     global hist_tmp, produkt, cena, szt
+#
+#     produkt = f.readline().strip()
+#     cena = int(f.readline().strip())
+#     szt = int(f.readline().strip())
+#
+#     hist_tmp.append(akcja)
+#     hist_tmp.append(produkt)
+#     hist_tmp.append(cena)
+#     hist_tmp.append(szt)
+#
+#     historia.append(hist_tmp)
+#     hist_tmp = []
 
 
-def zakup_obliczenie_else():
-    global ilosc_szt, magazyn
-    x = magazyn[produkt]
-    ilosc_szt = x + szt
-    magazyn[produkt] = ilosc_szt
+# def zakup_argv():
+#     global hist_tmp, produkt, cena, szt, saldo
+#
+#     produkt = sys.argv[3]
+#     cena_zakupu = int(sys.argv[4])
+#     szt_zakup = int(sys.argv[5])
+#
+#     hist_tmp.append(sys.argv[2])
+#     dodawanie_historii(sys.argv[2])
+#     hist_tmp.append(produkt)
+#     dodawanie_historii(produkt)
+#     hist_tmp.append(cena_zakupu)
+#     dodawanie_historii(cena_zakupu)
+#     hist_tmp.append(szt_zakup)
+#     dodawanie_historii(szt_zakup)
+#
+#     historia.append(hist_tmp)
+#     hist_tmp = []
+#
+#     saldo = saldo - (cena * szt)
 
-def sprzedaz_obliczenie_if():
-    global ilosc_szt, magazyn
-    x = magazyn[produkt]
-    ilosc_szt = x - szt
-    magazyn[produkt] = ilosc_szt
+# def sprzedaz_argv():
+#     global hist_tmp, produkt, cena, szt, saldo
+#
+#     produkt = sys.argv[3]
+#     cena = int(sys.argv[4])
+#     szt = int(sys.argv[5])
+#
+#     hist_tmp.append(sys.argv[2])
+#     dodawanie_historii(sys.argv[2])
+#     hist_tmp.append(produkt)
+#     dodawanie_historii(produkt)
+#     hist_tmp.append(cena)
+#     dodawanie_historii(cena)
+#     hist_tmp.append(szt)
+#     dodawanie_historii(szt)
+#
+#     historia.append(hist_tmp)
+#     hist_tmp = []
+#
+#     saldo = saldo + (cena * szt)
+
+
+# def zakup_obliczenie_else():
+#     global ilosc_szt, magazyn
+#     x = magazyn[produkt]
+#     ilosc_szt = x + szt
+#     magazyn[produkt] = ilosc_szt
+
+# def sprzedaz_obliczenie_if():
+#     global ilosc_szt, magazyn
+#     x = magazyn[produkt]
+#     ilosc_szt = x - szt
+#     magazyn[produkt] = ilosc_szt
 
 
 
@@ -118,7 +118,17 @@ while True:
 
     elif akcja == "zakup":
 
-        historia_zakup_sprzedaz()
+        produkt = f.readline().strip()
+        cena = int(f.readline().strip())
+        szt = int(f.readline().strip())
+
+        hist_tmp.append(akcja)
+        hist_tmp.append(produkt)
+        hist_tmp.append(cena)
+        hist_tmp.append(szt)
+
+        historia.append(hist_tmp)
+        hist_tmp = []
 
         saldo = saldo - (cena * szt)
 
@@ -131,11 +141,22 @@ while True:
         if produkt not in magazyn:
             magazyn[produkt] = szt
         else:
-            zakup_obliczenie_else()
+            x = magazyn[produkt]
+            ilosc_szt = x + szt
+            magazyn[produkt] = ilosc_szt
 
     elif akcja == "sprzedaz":
+        produkt = f.readline().strip()
+        cena = int(f.readline().strip())
+        szt = int(f.readline().strip())
 
-        historia_zakup_sprzedaz()
+        hist_tmp.append(akcja)
+        hist_tmp.append(produkt)
+        hist_tmp.append(cena)
+        hist_tmp.append(szt)
+
+        historia.append(hist_tmp)
+        hist_tmp = []
 
         saldo = saldo + (cena * szt)
 
@@ -145,7 +166,9 @@ while True:
             print()
             exit()
         if produkt in magazyn:
-            sprzedaz_obliczenie_if()
+            x = magazyn[produkt]
+            ilosc_szt = x - szt
+            magazyn[produkt] = ilosc_szt
 
             if ilosc_szt == 0:
                 del magazyn[produkt]
@@ -213,25 +236,41 @@ if sys.argv[2] == "przeglad":
         print("Przeglad historii:", historia[przeglad_od])
         print()
 
-if sys.argv[2] == "saldo":
-    kwota = int(sys.argv[3])
-    komentarz = sys.argv[4]
+# if sys.argv[2] == "saldo":
+#     kwota = int(sys.argv[3])
+#     komentarz = sys.argv[4]
+#
+#     hist_tmp.append(sys.argv[2])
+#     dodawanie_historii(sys.argv[2])
+#     hist_tmp.append(kwota)
+#     dodawanie_historii(kwota)
+#     hist_tmp.append(komentarz)
+#     dodawanie_historii(komentarz)
+#
+#     historia.append(hist_tmp)
+#     hist_tmp = []
+#
+#     saldo += kwota
+
+if sys.argv[2] == "zakup":
+
+    produkt = sys.argv[3]
+    cena = int(sys.argv[4])
+    szt = int(sys.argv[5])
 
     hist_tmp.append(sys.argv[2])
     dodawanie_historii(sys.argv[2])
-    hist_tmp.append(kwota)
-    dodawanie_historii(kwota)
-    hist_tmp.append(komentarz)
-    dodawanie_historii(komentarz)
+    hist_tmp.append(produkt)
+    dodawanie_historii(produkt)
+    hist_tmp.append(cena)
+    dodawanie_historii(cena)
+    hist_tmp.append(szt)
+    dodawanie_historii(szt)
 
     historia.append(hist_tmp)
     hist_tmp = []
 
-    saldo += kwota
-
-if sys.argv[2] == "zakup":
-
-    zakup_argv()
+    saldo = saldo - (cena * szt)
 
 
     if saldo < 0:
@@ -243,11 +282,30 @@ if sys.argv[2] == "zakup":
     if produkt not in magazyn:
         magazyn[produkt] = szt
     else:
-        zakup_obliczenie_else()
+        x = magazyn[produkt]
+        ilosc_szt = x + szt
+        magazyn[produkt] = ilosc_szt
+
 
 if sys.argv[2] == "sprzedaz":
 
-    sprzedaz_argv()
+    produkt = sys.argv[3]
+    cena = int(sys.argv[4])
+    szt = int(sys.argv[5])
+
+    hist_tmp.append(sys.argv[2])
+    dodawanie_historii(sys.argv[2])
+    hist_tmp.append(produkt)
+    dodawanie_historii(produkt)
+    hist_tmp.append(cena)
+    dodawanie_historii(cena)
+    hist_tmp.append(szt)
+    dodawanie_historii(szt)
+
+    historia.append(hist_tmp)
+    hist_tmp = []
+
+    saldo = saldo + (cena * szt)
 
     if produkt not in magazyn:
         print()
@@ -255,8 +313,9 @@ if sys.argv[2] == "sprzedaz":
         print()
         exit()
     if produkt in magazyn:
-
-        sprzedaz_obliczenie_if()
+        x = magazyn[produkt]
+        ilosc_szt = x - szt
+        magazyn[produkt] = ilosc_szt
 
         if ilosc_szt == 0:
             del magazyn[produkt]

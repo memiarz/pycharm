@@ -1,0 +1,14 @@
+saldo
+10000
+wplata poczatkowa
+saldo
+500
+kieszonkowe
+zakup
+laptop
+2500
+2
+zakup
+gruszki
+100
+5

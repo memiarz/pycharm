@@ -1,7 +1,6 @@
 import sys
 
-sciezka = sys.argv[1]
-f = open(sciezka)
+f = open(sys.argv[1])
 
 linia = f.readline().strip()
 
@@ -13,9 +12,9 @@ magazyn = {}
 ilosc_szt = 0
 
 
-def dodawanie_historii(argument):
+def dodawanie_historii(argument):   # importowane do pozostałych plików
     # f = r"C:\Users\MRC22\PycharmProjects\python-nauka\acc_imp\acc2.txt"
-    f = sciezka
+    f = sys.argv[1]
     with open(f, "a") as plik:
         plik.write(str(argument) + "\n")
 
@@ -93,6 +92,7 @@ def dodawanie_historii(argument):
 
 
 
+### HISTORIA
 
 while True:
 
@@ -140,7 +140,9 @@ while True:
 
         if produkt not in magazyn:
             magazyn[produkt] = szt
-        else:
+
+        elif produkt in magazyn:
+
             x = magazyn[produkt]
             ilosc_szt = x + szt
             magazyn[produkt] = ilosc_szt
@@ -185,56 +187,45 @@ while True:
         break
 
 
+### SYS.ARGV
 
-
-
-# plik = r"C:\Users\MRC22\PycharmProjects\python-nauka\acc_imp\acc2.txt"
-# with open(plik, "a") as plik:
-#     plik.write("sprzedaz" + "\n")
-#     plik.write("oranzada" + "\n")
-#     plik.write("2500" + "\n")
-#     plik.write("2" + "\n")
-
-
-
-
-# plik_do_zapisu = "L5_zapis.txt"   #podajemy nazwę pliku jaki chcemy utworzyć
-#
-# tresc = "Jakiś tekst do zapisu..."
-#
-# with open(plik_do_zapisu, "w") as plik:     #tworzy nowy plik .txt
-#     plik.write(tresc)
-
-
-
-if sys.argv[2] not in ["konto", "magazyn", "przeglad",
-                       "saldo", "zakup", "sprzedaz"]:
-    print()
-    print("Niedozwolona akcja!")
-    print()
-    exit()
-
-if sys.argv[2] == "konto":
-    print()
-    print("Konto:", saldo)
-
-if sys.argv[2] == "magazyn":
-    print()
-    print("Magazyn: ", end="")
-    for produkt in sys.argv[3:]:
-        print(f"{produkt} {magazyn.get(produkt, 0)} szt., ", end="",)
-
-if sys.argv[2] == "przeglad":
-    przeglad_od = int(sys.argv[3])
-    try:
-        przeglad_do = int(sys.argv[4])
+def dozwolone_komendy():
+    if sys.argv[2] not in ["konto", "magazyn", "przeglad",
+                           "saldo", "zakup", "sprzedaz", "historia", "stan"]:  # USUNAC HISTORIĘ
         print()
-        print("Przeglad historii:", historia[przeglad_od:przeglad_do])
+        print("Niedozwolona akcja!")
         print()
-    except:
-        print()
-        print("Przeglad historii:", historia[przeglad_od])
-        print()
+        exit()
+
+
+
+
+
+# if sys.argv[2] == "magazyn":
+#     print(magazyn)
+
+
+# if sys.argv[2] == "konto":
+#     print()
+#     print("Konto:", saldo)
+
+# if sys.argv[2] == "magazyn":
+#     print()
+#     print("Magazyn: ", end="")
+#     for produkt in sys.argv[3:]:
+#         print(f"{produkt} {magazyn.get(produkt, 0)} szt., ", end="",)
+
+# if sys.argv[2] == "przeglad":
+#     przeglad_od = int(sys.argv[3])
+#     try:
+#         przeglad_do = int(sys.argv[4])
+#         print()
+#         print("Przeglad historii:", historia[przeglad_od:przeglad_do])
+#         print()
+#     except:
+#         print()
+#         print("Przeglad historii:", historia[przeglad_od])
+#         print()
 
 # if sys.argv[2] == "saldo":
 #     kwota = int(sys.argv[3])
@@ -252,97 +243,112 @@ if sys.argv[2] == "przeglad":
 #
 #     saldo += kwota
 
-if sys.argv[2] == "zakup":
-
-    produkt = sys.argv[3]
-    cena = int(sys.argv[4])
-    szt = int(sys.argv[5])
-
-    hist_tmp.append(sys.argv[2])
-    dodawanie_historii(sys.argv[2])
-    hist_tmp.append(produkt)
-    dodawanie_historii(produkt)
-    hist_tmp.append(cena)
-    dodawanie_historii(cena)
-    hist_tmp.append(szt)
-    dodawanie_historii(szt)
-
-    historia.append(hist_tmp)
-    hist_tmp = []
-
-    saldo = saldo - (cena * szt)
-
-
-    if saldo < 0:
-        print()
-        print("Nie można dokonać zakupu!" "\nZa mało pieniędy na koncie!")
-        print()
-        exit()
-
-    if produkt not in magazyn:
-        magazyn[produkt] = szt
-    else:
-        x = magazyn[produkt]
-        ilosc_szt = x + szt
-        magazyn[produkt] = ilosc_szt
+# if sys.argv[2] == "zakup":
+#
+#     produkt = sys.argv[3]
+#     cena = int(sys.argv[4])
+#     szt = int(sys.argv[5])
+#
+#     hist_tmp.append(sys.argv[2])
+#     dodawanie_historii(sys.argv[2])
+#     hist_tmp.append(produkt)
+#     dodawanie_historii(produkt)
+#     hist_tmp.append(cena)
+#     dodawanie_historii(cena)
+#     hist_tmp.append(szt)
+#     dodawanie_historii(szt)
+#
+#     historia.append(hist_tmp)
+#     hist_tmp = []
+#
+#     saldo = saldo - (cena * szt)
 
 
-if sys.argv[2] == "sprzedaz":
-
-    produkt = sys.argv[3]
-    cena = int(sys.argv[4])
-    szt = int(sys.argv[5])
-
-    hist_tmp.append(sys.argv[2])
-    dodawanie_historii(sys.argv[2])
-    hist_tmp.append(produkt)
-    dodawanie_historii(produkt)
-    hist_tmp.append(cena)
-    dodawanie_historii(cena)
-    hist_tmp.append(szt)
-    dodawanie_historii(szt)
-
-    historia.append(hist_tmp)
-    hist_tmp = []
-
-    saldo = saldo + (cena * szt)
-
-    if produkt not in magazyn:
-        print()
-        print("Błąd!""\nNie można sprzedać produktu którego nie ma w magazynie!")
-        print()
-        exit()
-    if produkt in magazyn:
-        x = magazyn[produkt]
-        ilosc_szt = x - szt
-        magazyn[produkt] = ilosc_szt
-
-        if ilosc_szt == 0:
-            del magazyn[produkt]
-        elif ilosc_szt < 0:
-            print()
-            print("Nieprawidłowa operacja: za duża ilość sprzedanych elementów!")
-            print()
-            exit()
-
-print()
-print()
-for element in historia:
-    print(element)
-
-print()
-print("Saldo:", saldo)
-print()
-print("Magazyn:", magazyn)
+    # if saldo < 0:
+    #     print()
+    #     print("Nie można dokonać zakupu!" "\nZa mało pieniędy na koncie!")
+    #     print()
+    #     exit()
+    #
+    # if produkt not in magazyn:
+    #     magazyn[produkt] = szt
+    # else:
+    #     x = magazyn[produkt]
+    #     ilosc_szt = x + szt
+    #     magazyn[produkt] = ilosc_szt
 
 
+# if sys.argv[2] == "sprzedaz":
+#
+#     produkt = sys.argv[3]
+#     cena = int(sys.argv[4])
+#     szt = int(sys.argv[5])
+#
+#     hist_tmp.append(sys.argv[2])
+#     dodawanie_historii(sys.argv[2])
+#     hist_tmp.append(produkt)
+#     dodawanie_historii(produkt)
+#     hist_tmp.append(cena)
+#     dodawanie_historii(cena)
+#     hist_tmp.append(szt)
+#     dodawanie_historii(szt)
+#
+#     historia.append(hist_tmp)
+#     hist_tmp = []
+#
+#     saldo = saldo + (cena * szt)
+#
+#     if produkt not in magazyn:
+#         print()
+#         print("Błąd!""\nNie można sprzedać produktu którego nie ma w magazynie!")
+#         print()
+#         exit()
+#     if produkt in magazyn:
+#         x = magazyn[produkt]
+#         ilosc_szt = x - szt
+#         magazyn[produkt] = ilosc_szt
+#
+#         if ilosc_szt == 0:
+#             del magazyn[produkt]
+#         elif ilosc_szt < 0:
+#             print()
+#             print("Nieprawidłowa operacja: za duża ilość sprzedanych elementów!")
+#             print()
+#             exit()
 
+# print()
+# print()
+# for element in historia:
+#     print(element)
+#
+# print()
+# print("Saldo:", saldo)
+# print()
+# print("Magazyn:", magazyn)
+#
 
 
 
 
 
 
+
+
+# plik = r"C:\Users\MRC22\PycharmProjects\python-nauka\acc_imp\acc2.txt"
+# with open(plik, "a") as plik:
+#     plik.write("sprzedaz" + "\n")
+#     plik.write("oranzada" + "\n")
+#     plik.write("2500" + "\n")
+#     plik.write("2" + "\n")
+
+
+
+# plik_do_zapisu = "L5_zapis.txt"   #podajemy nazwę pliku jaki chcemy utworzyć
+#
+# tresc = "Jakiś tekst do zapisu..."
+#
+# with open(plik_do_zapisu, "w") as plik:     #tworzy nowy plik .txt
+#     plik.write(tresc)
 
 
 
@@ -462,6 +468,12 @@ print("Magazyn:", magazyn)
 #         break
 #
 #
+
+
+
+
+
+
 #
 # if sys.argv[1] not in ["konto", "magazyn", "przeglad",
 #                        "saldo", "zakup", "sprzedaz"]:

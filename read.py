@@ -5,11 +5,11 @@ import json
 import pickle       # reader.py <src> <dst> <change1> <change2> ...
 
 wczytaj_csv = sys.argv[1]
-# zapisz_jako = sys.argv[2]
-# wiersz = sys.argv[3]
-# kolumna = sys.argv[4]
-# wartosc = sys.argv[5]
+wiersz = int(sys.argv[2])
+kolumna = int(sys.argv[3])
+wartosc = sys.argv[4]
 
+# zapisz_jako = sys.argv[5]
 
 
 #os.path.exists(path)
@@ -26,10 +26,38 @@ else:
             print()
             print(F"Plik nie istnieje. Zawartość katalogu [{sciezka_istnieje}]:", "\n", os.listdir(sciezka_istnieje))
             print()
+            exit()
     except:
-            print("Błędna ścieżka")
+            print("Błędna ścieżka!")
             print()
             exit()
+
+lista_tmp = []
+
+with open(wczytaj_csv, "r") as plik:
+    for linia in csv.reader(plik):
+        lista_tmp.append(linia)
+
+lista_tmp[wiersz][kolumna] = wartosc
+
+#
+with open("iris2.csv", "w") as plik:
+    writer = csv.writer(plik)
+    writer.writerows(lista_tmp)
+
+
+
+
+#
+
+
+
+# for (i, item) in enumerate(lista_tmp, start=1):
+#     print(i, item)
+
+# for element in lista_tmp:
+#     print(element)
+
 
 
 

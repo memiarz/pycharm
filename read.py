@@ -22,17 +22,28 @@ if plik_istnieje:
     pass
 
 else:
-    try:
-        if sciezka_odczyt_istnieje:
-            print()
-            print(F"Podany plik nie istnieje. Zawartość katalogu [{sciezka_odczyt_istnieje}]:",
-                  "\n", os.listdir(sciezka_odczyt_istnieje))
-            print()
-            exit()
-    except:
-            print("Błędna ścieżka do odczytu")
-            print()
-            exit()
+    if os.path.isdir(sciezka_odczyt_istnieje):
+        print(F"Podany plik nie istnieje. Zawartość katalogu [{sciezka_odczyt_istnieje}]:",
+                      "\n", os.listdir(sciezka_odczyt_istnieje))
+        print()
+        exit()
+
+    elif not os.path.isdir(sciezka_odczyt_istnieje):
+        print()
+        print("Błędna ścieżka do odczytu pliku")
+        exit()
+
+    # try:
+    #     if os.path.isdir(sciezka_odczyt_istnieje):
+    #         print()
+    #         print(F"Podany plik nie istnieje. Zawartość katalogu [{sciezka_odczyt_istnieje}]:",
+    #               "\n", os.listdir(sciezka_odczyt_istnieje))
+    #         print()
+    #         exit()
+    # except:
+    #         print("Błędna ścieżka do odczytu")
+    #         print()
+    #         exit()
 
 
 if os.path.isdir(sciezka_zapis_istnieje):

@@ -8,7 +8,7 @@ wczytaj_csv = sys.argv[1]
 wiersz = int(sys.argv[2])
 kolumna = int(sys.argv[3])
 wartosc = sys.argv[4]
-zapisz_jako = sys.argv[5]
+zapisz_jako = sys.argv[5]           # zmienić kolejność!
 
 
 #os.path.exists(path)
@@ -20,11 +20,12 @@ sciezka_zapis_istnieje = os.path.dirname(zapisz_jako)
 if plik_istnieje:
     print("Jest taki plik")
     pass
+
 else:
     try:
         if sciezka_odczyt_istnieje:
             print()
-            print(F"Plik do odczytu nie istnieje. Zawartość katalogu [{sciezka_odczyt_istnieje}]:",
+            print(F"Podany plik nie istnieje. Zawartość katalogu [{sciezka_odczyt_istnieje}]:",
                   "\n", os.listdir(sciezka_odczyt_istnieje))
             print()
             exit()
@@ -33,55 +34,79 @@ else:
             print()
             exit()
 
-if sciezka_zapis_istnieje:
-    pass
 
+if os.path.isdir(sciezka_zapis_istnieje):
+    pass
 else:
     try:
+        print("Ścieżka do zapisu nie istnieje")
+        print(F"Utworzyć [{zapisz_jako}] ?")
+        tworzenie_sciezki = input("Tak/Nie""\n")
+        print(tworzenie_sciezki)
         print()
-        print(F"Plik do odczytu nie istnieje. Zawartość katalogu [{sciezka_zapis_istnieje}]:",
-              "\n", os.listdir(sciezka_zapis_istnieje))
-        print()
-        exit()
+        if tworzenie_sciezki in ["Tak", "tak"]:
+            os.makedirs(sciezka_zapis_istnieje)
+            print(F"Ścieżka {sciezka_zapis_istnieje} została utworzona")
+        elif tworzenie_sciezki in ["Nie", "nie"]:
+            exit()
 
     except:
         print("Błędna ścieżka do zapisu")
-        print()
         exit()
+
+
+
+
+# else:
+#     try:
+#         print()
+#         print(F"Plik do odczytu nie istnieje. Zawartość katalogu [{sciezka_zapis_istnieje}]:",
+#               "\n", os.listdir(sciezka_zapis_istnieje))
+#         print()
+#         exit()
+#
+#     except:
+#         print("Błędna ścieżka do zapisu")
+#         print()
+#         exit()
 
 
 lista_tmp = []
 
-# zapisywanie csv
-
-if zapisz_jako.endswith(".csv"):    # endswith sprawdza rozszerzenie pliku
+def odczytaj_plik():
+    global lista_tmp
     with open(wczytaj_csv, "r") as plik:
         for linia in csv.reader(plik):
             lista_tmp.append(linia)
-
     lista_tmp[wiersz][kolumna] = wartosc
+
+# zapisywanie csv
+
+print("po tak/nie")
+
+if zapisz_jako.endswith(".csv"):    # endswith sprawdza rozszerzenie pliku
+    odczytaj_plik()
 
     with open(zapisz_jako, "w", newline='') as plik:    #newline= zapobiega pustym enterom przy zapisywaniu
         writer = csv.writer(plik)
         writer.writerows(lista_tmp)
 
+    print()
     with open(zapisz_jako, "r") as plik:
         for linia in csv.reader(plik):
             print(linia)
+    print()
     exit()
 
 # zapisywanie json
 
-if zapisz_jako.endswith(".json"):    # endswith sprawdza rozszerzenie pliku
-    with open(wczytaj_csv, "r") as plik:
-        for linia in csv.reader(plik):
-            lista_tmp.append(linia)
-
-    lista_tmp[wiersz][kolumna] = wartosc
+if zapisz_jako.endswith(".json"):
+    odczytaj_plik()# endswith sprawdza rozszerzenie pliku
 
     with open(zapisz_jako, "w") as plik:
         json.dump(lista_tmp, plik)
 
+    print()
     with open(zapisz_jako, "r") as plik:
         for linia in json.load(plik):
             print(linia)
@@ -90,14 +115,12 @@ if zapisz_jako.endswith(".json"):    # endswith sprawdza rozszerzenie pliku
 
 # zapisywanie pickle
 if zapisz_jako.endswith(".pickle"):    # endswith sprawdza rozszerzenie pliku
-    with open(wczytaj_csv, "r") as plik:
-        for linia in csv.reader(plik):
-            lista_tmp.append(linia)
+    odczytaj_plik()
 
     with open(zapisz_jako, "wb") as plik:
         pickle.dump(lista_tmp, plik)
 
-
+    print()
     with open(zapisz_jako, "rb") as plik:
         print()
         for linia in pickle.load(plik):

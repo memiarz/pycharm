@@ -2,29 +2,36 @@
 
 # OPEN WEATHER:
 
-
 import pprint
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 import csv
 import sys
 import os
 
-API_ARGV = sys.argv[1]
-data_argv = sys.argv[2]
+
+# API = "4dff31c855f6108ab6652907f07d9060"     # SKASOWAĆ
+
+
+try:
+    API_ARGV = sys.argv[1]
+    data_argv = sys.argv[2]
+
+except:
+    API_ARGV = sys.argv[1]
+    date = datetime.today().date()
+    data_argv = str(date + timedelta(days=1))
+    # print(date + timedelta(days=1))
+
 
 wwa_lat = 52.2319581
 wwa_lon = 21.0067249
-API = "4dff31c855f6108ab6652907f07d9060"     # SKASOWAĆ
+API_url = F"https://api.openweathermap.org/data/2.5/onecall?lat={wwa_lat}&lon={wwa_lon}&exclude=hourly,minutely,alerts&appid={API_ARGV}"
 
 pogoda = {}
 
-
-API_url = F"https://api.openweathermap.org/data/2.5/onecall?lat={wwa_lat}&lon={wwa_lon}&exclude=hourly,minutely,alerts&appid={API_ARGV}"
-
-
-if os.stat("historia_pogody.json").st_size > 0: #sprawdza, czy plik jest pusty czy nie
+if os.stat("historia_pogody.json").st_size > 0:  # sprawdza, czy plik jest pusty czy nie
     print("Sprawdzam historię...")
     with open("historia_pogody.json", "r") as plik:
         sprawdzenie_historii = json.load(plik)
@@ -33,22 +40,18 @@ if os.stat("historia_pogody.json").st_size > 0: #sprawdza, czy plik jest pusty c
             print(F"{data_argv}: {wyszukiwanie}")
             exit()
         else:
-            print("Wysyłam zapytanie")
+            print("Wysyłam zapytanie...")
 
 else:
-    print("Wysyłam zapytanie")
-
-
-
+    print("Wysyłam zapytanie...")
 
 odpowiedz = requests.get(API_url)
 # pprint.pprint(odpowiedz.json())             # pprint.pprint(odpowiedz.json()["list"][3]["weather"])
-zapytanie = odpowiedz.json()                # zapytanie = odpowiedz.json()["list"][1]["weather"]
-
+zapytanie = odpowiedz.json()  # zapytanie = odpowiedz.json()["list"][1]["weather"]
 
 for it in zapytanie["daily"]:
-    data_format = datetime.fromtimestamp(it["dt"]).date()   # przeszukiwanie po dacie
-    dzien = str(data_format)      #zmiana formatu na ludzki
+    data_format = datetime.fromtimestamp(it["dt"]).date()  # przeszukiwanie po dacie
+    dzien = str(data_format)  # zmiana formatu na ludzki
     if dzien == data_argv:
         rain = it.get("rain")
         if rain:
@@ -59,22 +62,42 @@ for it in zapytanie["daily"]:
             print(F"{data_argv}: nie pada")
 
 if data_argv not in pogoda:
-    print("Brak informacji. Maksymalne wyszukiwanie to 7 dni od daty dzisiejszej")
+    print("Brak informacji")
     exit()
-
 
 try:
     with open("historia_pogody.json", "r") as plik:
-        aktualizacja_slownika = json.load(plik)
-        aktualizacja_slownika.update(pogoda)        # wypakowaywanie słownika z pliku i aktualizowanie o dane ze słownika "pogoda"
+        aktualizacja_slownika = json.load(plik) # wypakowaywanie słownika z pliku i aktualizowanie o dane ze słownika "pogoda"
+        aktualizacja_slownika.update(pogoda)
 
     with open("historia_pogody.json", "w") as plik:  # zapisywanie uaktualniownego słownika do pliku
         json.dump(aktualizacja_slownika, plik, sort_keys=True, indent=4, separators=(',', ': '))
-        # json.dump(aktualizacja_slownika, plik, sort_keys=True, indent=4, separators=(',', ': '))
+
 except:
     with open("historia_pogody.json", "w") as plik:
         json.dump(pogoda, plik, sort_keys=True, indent=4, separators=(',', ': '))
-        # json.dump(pogoda, plik, sort_keys=True, indent=4, separators=(',', ': '))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

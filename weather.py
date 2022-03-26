@@ -10,7 +10,7 @@ from datetime import datetime
 import json
 import csv
 import sys
-
+import os
 
 API_ARGV = sys.argv[1]
 data_argv = sys.argv[2]
@@ -24,17 +24,40 @@ pogoda = {}
 
 API_url = F"https://api.openweathermap.org/data/2.5/onecall?lat={wwa_lat}&lon={wwa_lon}&exclude=hourly,minutely,alerts&appid={API_ARGV}"
 
-try:
+
+if os.stat("historia_pogody.json").st_size > 0: #sprawdza, czy plik jest pusty czy nie
+    print("Sprawdzam historię...")
     with open("historia_pogody.json", "r") as plik:
         sprawdzenie_historii = json.load(plik)
         wyszukiwanie = sprawdzenie_historii.get(data_argv)
-    if wyszukiwanie:
-        print(F"{data_argv}: {wyszukiwanie}")
-except:
-    print("Wysyłam zapytanie")
+        if wyszukiwanie:
+            print(F"{data_argv}: {wyszukiwanie}")
+            exit()
+        else:
+            print("Wysyłam zapytanie")
 
-if wyszukiwanie:    # nie można tego dać do try, bo nie zadziała
-    exit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+# try:
+#     with open("historia_pogody.json", "r") as plik:
+#         sprawdzenie_historii = json.load(plik)
+#         wyszukiwanie = sprawdzenie_historii.get(data_argv)
+#     # if wyszukiwanie:
+#         print(F"{data_argv}: {wyszukiwanie}")
+#
+# except:
+#     print("Wysyłam zapytanie")
 
 
 odpowiedz = requests.get(API_url)
@@ -43,8 +66,8 @@ zapytanie = odpowiedz.json()                # zapytanie = odpowiedz.json()["list
 
 
 for it in zapytanie["daily"]:
-    data_format = datetime.fromtimestamp(it["dt"]).date()
-    dzien = str(data_format)
+    data_format = datetime.fromtimestamp(it["dt"]).date()   # przeszukiwanie po dacie
+    dzien = str(data_format)      #zmiana formatu na ludzki
     if dzien == data_argv:
         rain = it.get("rain")
         if rain:
@@ -54,6 +77,10 @@ for it in zapytanie["daily"]:
             pogoda[dzien] = ["nie pada"]
             print(F"{data_argv}: nie pada")
 
+if data_argv not in pogoda:
+    print("Brak informacji")
+    exit()
+
 try:
     with open("historia_pogody.json", "r") as plik:
         aktualizacja_slownika = json.load(plik)
@@ -61,9 +88,11 @@ try:
 
     with open("historia_pogody.json", "w") as plik:  # zapisywanie uaktualniownego słownika do pliku
         json.dump(aktualizacja_slownika, plik)
+        # json.dump(aktualizacja_slownika, plik, sort_keys=True, indent=4, separators=(',', ': '))
 except:
     with open("historia_pogody.json", "w") as plik:
         json.dump(pogoda, plik)
+        # json.dump(pogoda, plik, sort_keys=True, indent=4, separators=(',', ': '))
 
 
 

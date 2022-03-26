@@ -1,48 +1,112 @@
 # Your API key is 4dff31c855f6108ab6652907f07d9060
 
+# OPEN WEATHER:
+
+
 #
 import pprint
 import requests
 from datetime import datetime
 import json
+import csv
+import sys
+
+
+API_ARGV = sys.argv[1]
+data_argv = sys.argv[2]
 
 wwa_lat = 52.2319581
 wwa_lon = 21.0067249
 API = "4dff31c855f6108ab6652907f07d9060"     # SKASOWAĆ
 
-historia_pogody = {}
+pogoda = {}
 
-# API_KEY = sys.argv[1]
-# API_url = F"http://api.openweathermap.org/data/2.5/forecast?lat={52.2319581}&lon={21.0067249}&appid={API}"
-API_url = F"https://api.openweathermap.org/data/2.5/onecall?lat={wwa_lat}&lon={wwa_lon}&exclude=hourly,minutely,alerts,current&appid={API}"
+
+API_url = F"https://api.openweathermap.org/data/2.5/onecall?lat={wwa_lat}&lon={wwa_lon}&exclude=hourly,minutely,alerts&appid={API_ARGV}"
+
+try:
+    with open("historia_pogody.json", "r") as plik:
+        sprawdzenie_historii = json.load(plik)
+        wyszukiwanie = sprawdzenie_historii.get(data_argv)
+    if wyszukiwanie:
+        print(wyszukiwanie)
+        exit()
+    else:
+        print("Wysyłam zapytanie")
+except:
+    print("Wysyłam zapytanie")
+
+
 
 odpowiedz = requests.get(API_url)
-
 # pprint.pprint(odpowiedz.json())             # pprint.pprint(odpowiedz.json()["list"][3]["weather"])
-
-
 zapytanie = odpowiedz.json()                # zapytanie = odpowiedz.json()["list"][1]["weather"]
 
 
-
-
-
 for it in zapytanie["daily"]:
-    data = datetime.fromtimestamp(it["dt"]).date()
-    dzien = str(data)
+    data_format = datetime.fromtimestamp(it["dt"]).date()
+    dzien = str(data_format)
+    if dzien == data_argv:
+        rain = it.get("rain")
+        if rain:
+            print("pada")
+            pogoda[dzien] = ["pada"]
+        else:
+            pogoda[dzien] = ["nie pada"]
+            print("nie pada")
 
-    rain = it.get("rain")
-    # rain = glowny.get("rain")
-    if rain:
-        historia_pogody[dzien] = ["pada"]
-    else:
-      historia_pogody[dzien] = ["nie pada"]
-print(historia_pogody)
+try:
+    with open("historia_pogody.json", "r") as plik:
+        aktualizacja_slownika = json.load(plik)
+        aktualizacja_slownika.update(pogoda)        # wypakowaywanie słownika z pliku i aktualizowanie o dane ze słownika "pogoda"
+
+    with open("historia_pogody.json", "w") as plik:  # zapisywanie uaktualniownego słownika do pliku
+        json.dump(aktualizacja_slownika, plik)
+except:
+    with open("historia_pogody.json", "w") as plik:
+        json.dump(pogoda, plik)
+
+
+
+
+
+
+
+
+
+
+
+
+# for it in zapytanie["daily"]:
+#     data = datetime.fromtimestamp(it["dt"]).date()
+#     dzien = str(data)
+#
+#     rain = it.get("rain")
+#     if rain:
+#         pogoda[dzien] = ["pada"]
+#     else:
+#       pogoda[dzien] = ["nie pada"]
+#
+# with open("historia_pogody.json", "a", newline='') as plik:
+#     json.dump(pogoda, plik, sort_keys=True, indent=4, separators=(',', ': '))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# print(pogoda)
 
 # zapytanie = odpowiedz.json()["list"]
 # print(len(zapytanie))
-
-
 
 
 

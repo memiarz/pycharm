@@ -29,13 +29,12 @@ try:
         sprawdzenie_historii = json.load(plik)
         wyszukiwanie = sprawdzenie_historii.get(data_argv)
     if wyszukiwanie:
-        print(wyszukiwanie)
-        exit()
-    else:
-        print("Wysyłam zapytanie")
+        print(F"{data_argv}: {wyszukiwanie}")
 except:
     print("Wysyłam zapytanie")
 
+if wyszukiwanie:    # nie można tego dać do try, bo nie zadziała
+    exit()
 
 
 odpowiedz = requests.get(API_url)
@@ -49,11 +48,11 @@ for it in zapytanie["daily"]:
     if dzien == data_argv:
         rain = it.get("rain")
         if rain:
-            print("pada")
+            print(F"{data_argv}: pada")
             pogoda[dzien] = ["pada"]
         else:
             pogoda[dzien] = ["nie pada"]
-            print("nie pada")
+            print(F"{data_argv}: nie pada")
 
 try:
     with open("historia_pogody.json", "r") as plik:

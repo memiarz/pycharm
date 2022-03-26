@@ -3,7 +3,6 @@
 # OPEN WEATHER:
 
 
-#
 import pprint
 import requests
 from datetime import datetime
@@ -36,28 +35,10 @@ if os.stat("historia_pogody.json").st_size > 0: #sprawdza, czy plik jest pusty c
         else:
             print("Wysyłam zapytanie")
 
+else:
+    print("Wysyłam zapytanie")
 
 
-
-
-
-
-
-
-
-
-
-
-
-# try:
-#     with open("historia_pogody.json", "r") as plik:
-#         sprawdzenie_historii = json.load(plik)
-#         wyszukiwanie = sprawdzenie_historii.get(data_argv)
-#     # if wyszukiwanie:
-#         print(F"{data_argv}: {wyszukiwanie}")
-#
-# except:
-#     print("Wysyłam zapytanie")
 
 
 odpowiedz = requests.get(API_url)
@@ -78,8 +59,9 @@ for it in zapytanie["daily"]:
             print(F"{data_argv}: nie pada")
 
 if data_argv not in pogoda:
-    print("Brak informacji")
+    print("Brak informacji. Maksymalne wyszukiwanie to 7 dni od daty dzisiejszej")
     exit()
+
 
 try:
     with open("historia_pogody.json", "r") as plik:
@@ -87,11 +69,11 @@ try:
         aktualizacja_slownika.update(pogoda)        # wypakowaywanie słownika z pliku i aktualizowanie o dane ze słownika "pogoda"
 
     with open("historia_pogody.json", "w") as plik:  # zapisywanie uaktualniownego słownika do pliku
-        json.dump(aktualizacja_slownika, plik)
+        json.dump(aktualizacja_slownika, plik, sort_keys=True, indent=4, separators=(',', ': '))
         # json.dump(aktualizacja_slownika, plik, sort_keys=True, indent=4, separators=(',', ': '))
 except:
     with open("historia_pogody.json", "w") as plik:
-        json.dump(pogoda, plik)
+        json.dump(pogoda, plik, sort_keys=True, indent=4, separators=(',', ': '))
         # json.dump(pogoda, plik, sort_keys=True, indent=4, separators=(',', ': '))
 
 

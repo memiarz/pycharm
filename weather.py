@@ -49,11 +49,11 @@ odpowiedz = requests.get(API_url)
 # pprint.pprint(odpowiedz.json())             # pprint.pprint(odpowiedz.json()["list"][3]["weather"])
 zapytanie = odpowiedz.json()  # zapytanie = odpowiedz.json()["list"][1]["weather"]
 
-for it in zapytanie["daily"]:
-    data_format = datetime.fromtimestamp(it["dt"]).date()  # przeszukiwanie po dacie
+for dane in zapytanie["daily"]:
+    data_format = datetime.fromtimestamp(dane["dt"]).date()  # przeszukiwanie po dacie
     dzien = str(data_format)  # zmiana formatu na ludzki
     if dzien == data_argv:
-        rain = it.get("rain")
+        rain = dane.get("rain")
         if rain:
             print(F"{data_argv}: pada")
             pogoda[dzien] = ["pada"]
@@ -96,20 +96,6 @@ except:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # for it in zapytanie["daily"]:
 #     data = datetime.fromtimestamp(it["dt"]).date()
 #     dzien = str(data)
@@ -120,19 +106,8 @@ except:
 #     else:
 #       pogoda[dzien] = ["nie pada"]
 #
-# with open("historia_pogody.json", "a", newline='') as plik:
+# with open("historia_pogody.json", "a", newline='') as plik:       #appendowanie na jsonie nie wychodzi
 #     json.dump(pogoda, plik, sort_keys=True, indent=4, separators=(',', ': '))
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -148,8 +123,8 @@ except:
 # for listy in zapytanie:
 #   print(len(listy))
 
-# with open('data.json', 'w') as plik:
-#   json.dump(zapytanie, plik, indent=4, sort_keys=True, separators=(",", ':'))
+with open('data.json', 'w') as plik:
+  json.dump(zapytanie, plik, indent=4, sort_keys=True, separators=(",", ':'))
 
 
 

@@ -1,14 +1,9 @@
 import os
-import sys
 import json
 import requests
 from datetime import datetime, timedelta
 
 
-
-class Slownik:
-    def __init__(self):
-        pogoda = {}
 
 
 class API():
@@ -21,16 +16,12 @@ class API():
         self.zapytanie = odpowiedz.json()
 
 
-
 class WeatherForecast(API):
 
     def __init__(self, klucz_API):
         super().__init__()
         self.klucz_API =  klucz_API
         self.pogoda = {}
-        self.pogoda_historia = {}
-
-
 
     def __iter__(self):
             for x in self.zapytanie["daily"]:
@@ -41,12 +32,11 @@ class WeatherForecast(API):
              else:
               yield dzien
 
-
     def __getitem__(self, podany_dzien):
 
-        if os.stat("weather_history.json").st_size > 0:
+        if os.stat("historia_pogody.json").st_size > 0:
             print("Sprawdzam historię...")
-            with open("weather_history.json", "r") as plik:
+            with open("historia_pogody.json", "r") as plik:
                 sprawdzenie_historii = json.load(plik)
                 wyszukiwanie = sprawdzenie_historii.get(podany_dzien)
                 if wyszukiwanie:
@@ -54,57 +44,59 @@ class WeatherForecast(API):
                     exit()
                 else:
                     print("Wysyłam zapytanie...")
+        else:
+            print("Wysyłam zapytanie...")
 
-            for x in self.zapytanie["daily"]:
-             data_format = datetime.fromtimestamp(x["dt"]).date()
-             dzien = str(data_format)
+        for x in self.zapytanie["daily"]:
+            data_format = datetime.fromtimestamp(x["dt"]).date()
+            dzien = str(data_format)
 
-             # if os.stat("weather_history.json").st_size > 0:
-             #     print("Sprawdzam historię...")
-             #     with open("weather_history.json", "r") as plik:
-             #         sprawdzenie_historii = json.load(plik)
-             #         wyszukiwanie = sprawdzenie_historii.get(podany_dzien)
-             #         if wyszukiwanie:
-             #             print(F"{podany_dzien}: {wyszukiwanie}")
-             #             exit()
-             #         else:
-             #             print("Wysyłam zapytanie...")
+            if podany_dzien == dzien:
+                rain = x.get("rain")
+                if rain:
+                    self.pogoda[dzien] = ["pada"]
+                    return (F"{podany_dzien}: pada")
 
-             if podany_dzien == dzien:
-                 rain = x.get("rain")
-                 if rain:
-                     self.pogoda_historia[dzien] = ["pada"]
-                     return (F"{podany_dzien}: pada")
+                else:
+                    self.pogoda[dzien] = ["nie pada"]
+                    return (F"{podany_dzien}: nie pada")
 
-                 else:
-                     self.pogoda_historia[dzien] = ["nie pada"]
-                     return (F"{podany_dzien}: nie pada")
-
-            if podany_dzien not in self.pogoda:
-                print("Brak informacji dla podanej daty")
-                exit()
+        if podany_dzien not in dzien:
+            print("Brak informacji dla podanej daty")
+            exit()
 
     def items(self):
-        with open("weather_history.json", "r") as plik:
-
-            pogoda_hi = json.load(plik)
-            for x,y in pogoda_hi.items():
+        with open("historia_pogody.json", "r") as plik:
+            pogoda_historia = json.load(plik)
+            for x,y in pogoda_historia.items():
                 yield x,y
-
 
 
 wf = WeatherForecast("4dff31c855f6108ab6652907f07d9060")
 
 
-
-
-
 # for dane in wf:
 #     print(dane)
 
-print(wf["2022-06-15"])
+# print(wf["2022-05-16"])
 #
 #
 # for data in wf.items():
 #     print(data)
 
+# print(wf.pogoda)
+
+
+pogoda_ = wf.pogoda
+
+try:
+    with open("historia_pogody.json", "r") as plik:
+        aktualizacja_slownika = json.load(plik)
+        aktualizacja_slownika.update(pogoda_)
+
+    with open("historia_pogody.json", "w") as plik:
+        json.dump(aktualizacja_slownika, plik, sort_keys=True, indent=4, separators=(',', ': '))
+
+except:
+    with open("historia_pogody.json", "w") as plik:
+        json.dump(pogoda_, plik, sort_keys=True, indent=4, separators=(',', ': '))

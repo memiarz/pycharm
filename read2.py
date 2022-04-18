@@ -17,13 +17,14 @@ Rodzaj pliku (src i dst) powinien być wykrywany na podstawie rozszerzenia:
 
 '''''''''
 
+# python read2.py .\iris2.csv C:\Users\MRC22\Desktop\Pajton\eee.pickle 1 1 YT78flrere #
+
 
 import os
 import sys
 import csv
 import json
 import pickle       # reader.py <src> <dst> <change1> <change2> ...
-
 
 
 class Zmienne():
@@ -33,37 +34,30 @@ class Zmienne():
         self.wiersz = int(sys.argv[3])
         self.kolumna = int(sys.argv[4])
         self.wartosc = sys.argv[5]
-
-        self.sciezka_odczyt = os.path.dirname(
-            self.wczytaj_csv)  # bez slasza: c:\users\mrc22\desktop, ze slaszem: ...\desktop\python
+        self.lista_tmp = []
+        self.sciezka_odczyt = os.path.dirname(self.wczytaj_csv)
         self.sciezka_zapis = os.path.dirname(self.zapisz_jako)
-
 
 
 class IsPath(Zmienne):
     def __init__(self):
         Zmienne.__init__(self)
-        if os.path.isfile(
-                self.wczytaj_csv):  # sprawdzenie, czy istnieje plik do odczytu (tylko dla pełnej ścieżki, lub .\iris.csv)
+        if os.path.isfile(self.wczytaj_csv):
             pass
         else:
-            if os.path.isdir(self.sciezka_odczyt):  # nie można dać do środka wczytaj_csv
-                print()
+            if os.path.isdir(self.sciezka_odczyt):
                 print(F"Podany plik nie istnieje. Zawartość katalogu [{self.sciezka_odczyt}]:",
                       "\n", os.listdir(self.sciezka_odczyt))
-                print()
                 exit()
             elif not os.path.isdir(self.sciezka_odczyt):
-                print()
                 print("Podana ścieżka nie istnieje")
                 exit()
 
         if os.path.isdir(self.sciezka_zapis):
             pass
         else:
-            try:  ## potrzebne try?
+            try:
                 print("Ścieżka do zapisu nie istnieje")
-                print()
                 print(F"Utworzyć [{self.zapisz_jako}] ?")
                 tworzenie_sciezki = input("Tak/Nie""\n")  # stdin?
 
@@ -75,120 +69,79 @@ class IsPath(Zmienne):
                 else:
                     print("Nieprawidłowa komenda")
                     exit()
-
             except:
-                print()
                 print("Błędna ścieżka do zapisu")
                 exit()
 
-
-
 IsPath()
 
-class CSV(Zmienne):
+class OdczytCSV(Zmienne):
     def __init__(self):
         Zmienne.__init__(self)
-        self.lista_tmp = []
-
-    def plik_CSV(self):
         with open(self.wczytaj_csv, "r") as plik:
             for linia in csv.reader(plik):
                 self.lista_tmp.append(linia)
         self.lista_tmp[self.wiersz][self.kolumna] = self.wartosc
 
+class ZapiszWyswietlCSV(OdczytCSV):
+    def __init__(self):
+        Zmienne.__init__(self)
+        OdczytCSV.__init__(self)
+    def plik_CSV(self):
         with open(self.zapisz_jako, "w", newline='') as plik:
             writer = csv.writer(plik)
             writer.writerows(self.lista_tmp)
-
-        print()
         with open(self.zapisz_jako, "r") as plik:
             for linia in csv.reader(plik):
                 print(linia)
-        print()
         exit()
 
 
-class JSON(Zmienne):
+class ZapiszWyswietlJSON(OdczytCSV):
     def __init__(self):
         Zmienne.__init__(self)
-        self.lista_tmp = []
-
+        OdczytCSV.__init__(self)
     def plik_JSON(self):
-
-        with open(self.wczytaj_csv, "r") as plik:
-            for linia in csv.reader(plik):
-                self.lista_tmp.append(linia)
-        self.lista_tmp[self.wiersz][self.kolumna] = self.wartosc
-
         with open(self.zapisz_jako, "w") as plik:
             json.dump(self.lista_tmp, plik)
-
-        print()
         with open(self.zapisz_jako, "r") as plik:
             for linia in json.load(plik):
                 print(linia)
-        print()
         exit()
 
 
-
-class PICKLE(Zmienne):
+class ZapiszWyswietlPICKLE(OdczytCSV):
     def __init__(self):
         Zmienne.__init__(self)
-        self.lista_tmp = []
-
+        OdczytCSV.__init__(self)
     def plik_PICKLE(self):
-
-        with open(self.wczytaj_csv, "r") as plik:
-            for linia in csv.reader(plik):
-                self.lista_tmp.append(linia)
-        self.lista_tmp[self.wiersz][self.kolumna] = self.wartosc
-
         with open(self.zapisz_jako, "wb") as plik:
             pickle.dump(self.lista_tmp, plik)
-
-        print()
         with open(self.zapisz_jako, "rb") as plik:
             print()
             for linia in pickle.load(plik):
                 print(linia)
-        print()
         exit()
-
 
 
 zmienne = Zmienne()
 
-
 if zmienne.zapisz_jako.endswith(".csv"):
-    x = CSV()
+    x = ZapiszWyswietlCSV()
     x.plik_CSV()
 
 elif zmienne.zapisz_jako.endswith(".json"):
-    x = JSON()
+    x = ZapiszWyswietlJSON()
     x.plik_JSON()
 
 elif zmienne.zapisz_jako.endswith(".pickle"):
-    x = PICKLE()
+    x = ZapiszWyswietlPICKLE()
     x.plik_PICKLE()
 
 else:
-    print()
     print("Nieprawidłowe rozszerzenie pliku (.csv/.json/.pickle) \n  Plik nie został utworzony")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+print()
 
 
 
